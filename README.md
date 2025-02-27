@@ -1,4 +1,4 @@
-# BUT3_Developpement_logiciel
+# Bataille Navale
  
 ## Présentation
 Ce projet s'inscrit dans un contexte universitaire (3ème année de BUT). Il s'agit de la continuité du code développé en deuxième année. L'idée ici fut de reprenre le code réalisé l'année précédente afin de l'améliorer et d'ajouter de nouvelles fonctionnalités.
