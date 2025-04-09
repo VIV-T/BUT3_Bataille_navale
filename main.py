@@ -76,7 +76,7 @@ if __name__ == "__main__":
     grille = choix_mode_jeu.get_grille()
     mode_jeu = choix_mode_jeu.get_mode_jeu()
 
-    ### Choix de l'adversaire
+    ### Choix de l'adversaire (joueur/ordinateur)
     choix_adversaire=''
 
     # Le booléen choix_valide_joueur permet de gérer les cas d'erreur sur les inputs et d'y répondre de manière efficace :

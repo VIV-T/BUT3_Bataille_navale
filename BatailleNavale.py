@@ -47,7 +47,7 @@ import random
 from copy import deepcopy
 from Grille import Grille
 from Strategie import Strategie
-from Tools import afficher_couple_plateau
+from Tools import afficher_couple_plateau, get_plateau_symbole
 
 
 class BatailleNavale:
@@ -93,17 +93,18 @@ class BatailleNavale:
             self.jeu()
 
     # Permet de vérifier si un bateau est coulé
-    def navire_coule(self, initiale, grille):
-        for ligne in grille:
+    def navire_coule(self, initiale, plateau):
+        plateau_symbole = get_plateau_symbole(plateau=plateau)
+        for ligne in plateau_symbole:
             if initiale in ligne:
                 return False
         return True
 
     # Fonction de vérification de la victoire
     # => tous les navires ont coulé.
-    def tous_les_navires_ont_coule(self, grille):
+    def tous_les_navires_ont_coule(self, plateau):
         for navire in self.navires:
-            if not self.navire_coule(navire.get_symbole(), grille):
+            if not self.navire_coule(navire.get_symbole(), plateau):
                 return False
         return True
 
@@ -118,21 +119,23 @@ class BatailleNavale:
             grille_d_Attaque = self.grille_att_j2
 
         # modification du symbole si tir = raté
-        if grille_subit_Attaque[ligne - 1][colonne - 1] == "-":
-            grille_subit_Attaque[ligne - 1][colonne - 1] = "0"
-            grille_d_Attaque[ligne - 1][colonne - 1] = "0"
+        if grille_subit_Attaque[ligne - 1][colonne - 1].get_symbole() == "-":
+            grille_subit_Attaque[ligne - 1][colonne - 1].set_statut("fail")
+            grille_d_Attaque[ligne - 1][colonne - 1].set_statut("fail")
             return "Raté"
 
-        elif grille_subit_Attaque[ligne - 1][colonne - 1] == "X" or grille_subit_Attaque[ligne - 1][colonne - 1] == "0":
+        elif grille_subit_Attaque[ligne - 1][colonne - 1].get_symbole() == "X" or grille_subit_Attaque[ligne - 1][colonne - 1].get_symbole() == "0":
             print("Coordonnées déjà visées, tour au joueur adverse")
             return "Raté"
 
         # mdofocation du symbole si tir = touché
         else:
-            initiale = grille_subit_Attaque[ligne - 1][colonne - 1]
-            grille_subit_Attaque[ligne - 1][colonne - 1] = "X"
-            grille_d_Attaque[ligne - 1][colonne - 1] = "X"
+            initiale = grille_subit_Attaque[ligne - 1][colonne - 1].get_symbole()
+            grille_subit_Attaque[ligne - 1][colonne - 1].set_statut("hit")
+            grille_d_Attaque[ligne - 1][colonne - 1].set_statut("hit")
             if self.navire_coule(initiale, grille_subit_Attaque):
+                grille_subit_Attaque[ligne - 1][colonne - 1].set_statut("cast")
+                grille_d_Attaque[ligne - 1][colonne - 1].set_statut("cast")
                 print("Navire coulé !")
                 return "Touché, Coulé"
             return "Touché"

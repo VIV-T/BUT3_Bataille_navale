@@ -35,19 +35,37 @@ class Tile() :
             self._navire = None
         else :
             self._navire = navire
+
+        self.set_symbole()
         return True
 
 
-    def set_symbole(self):
-        if self._navire is None : 
-            self._symbole = "-"
+    def set_symbole(self, symbole : str | None = None):
+        if symbole is None :
+            if self._navire is None : 
+                self._symbole = "-"
+            else :
+                self._symbole = self._navire.get_symbole()
+
         else :
-            self._symbole = self._navire.get_symbole()
+            self._symbole = symbole
+
         return True
 
 
-    def set_statut(self, status : str | None = None): 
-            pass
+    def set_statut(self, statut : str | None = None): 
+            match statut :
+                case None :
+                    self._statut = None
+                # raté
+                case "fail" :
+                    self.set_symbole("0")
+                # touché
+                case "hit" : 
+                    self.set_symbole("X")
+                # coulé
+                case "cast" : 
+                    self.set_symbole("X")
 
     # Constructeur
     def __init__(self, navire = None):

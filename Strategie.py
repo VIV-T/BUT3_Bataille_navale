@@ -31,7 +31,7 @@ Methodes de classes :
     - placement_navires : permet de placer tous les navires (symbole) dans la grille, à partir du df pandas : inputs_strategie
                             => utilise la méthode placement_un_navire
 
-    - affichage_strategie : permet d'afficher la strategie en utlisant la fonction afficher_grille() du module Grille.py
+    - affichage_strategie : permet d'afficher la strategie en utlisant la fonction afficher_plateau() du module Tools.py
 """
 import pandas as pd
 
@@ -167,9 +167,9 @@ class Strategie():
         # Cette boucle permet d'ajouter l'ensemble du navire à la grille si la taille du navire est >1.
         while taille_navire != 0:
             # Modification du symbole dans le plateau de la grille.
-            if plateau[coord_ligne][coord_colonne] == '-' or plateau[coord_ligne][
-                coord_colonne] == navire.get_symbole():
-                plateau[coord_ligne][coord_colonne] = navire.get_symbole()
+            if plateau[coord_ligne][coord_colonne].get_symbole() == '-' or plateau[coord_ligne][
+                coord_colonne].get_symbole() == navire.get_symbole():
+                plateau[coord_ligne][coord_colonne].set_navire(navire)
                 taille_navire -= 1
             else:
 
