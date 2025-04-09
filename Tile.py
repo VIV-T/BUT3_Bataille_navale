@@ -13,7 +13,7 @@ from Navire import Navire
 # Classe 
 class Tile() :
     # Variables privées
-    _statut : str | None
+    _statut : str | None = None
     _navire : Navire | None
     _symbole : str 
 
@@ -59,12 +59,15 @@ class Tile() :
                     self._statut = None
                 # raté
                 case "fail" :
+                    self._statut = "fail"
                     self.set_symbole("0")
                 # touché
                 case "hit" : 
+                    self._statut = "hit"
                     self.set_symbole("X")
                 # coulé
                 case "cast" : 
+                    self._statut = "cast"
                     self.set_symbole("X")
 
     # Constructeur

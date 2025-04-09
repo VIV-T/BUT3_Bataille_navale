@@ -1,6 +1,8 @@
+##### Affichage des plateaux #####
+
 # Permet de recuperer le symbole de chacune des cases de jeu du plateau
 def get_plateau_symbole(plateau) :
-    plateau_symbole = list(map(lambda ligne_case_jeu : list(map(lambda case_jeu : case_jeu.get_symbole(), ligne_case_jeu)), plateau))
+    plateau_symbole = list(map(lambda ligne_tile : list(map(lambda tile : tile.get_symbole(), ligne_tile)), plateau))
 
     return plateau_symbole
 
@@ -34,3 +36,7 @@ def afficher_couple_plateau(plateau1, plateau2):
             plateau2_symbole[index_ligne]) + "\n"
     print(result)
     return (result)
+
+
+
+

@@ -98,8 +98,8 @@ class Grille():
         for i in range(self.__nb_lignes):
             self.plateau.append([])
             for j in range(self.__nb_colonnes):
-                case_jeu = FactoryTile().get_instance_tile()
-                self.plateau[i].append(case_jeu)
+                tile = FactoryTile().get_instance_tile()
+                self.plateau[i].append(tile)
 
         return True
 
