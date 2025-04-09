@@ -45,8 +45,9 @@ Methodes de classe :
 import os
 import random
 from copy import deepcopy
-from Grille import Grille, afficher_couple_grilles
+from Grille import Grille
 from Strategie import Strategie
+from Tools import afficher_couple_plateau
 
 
 class BatailleNavale:
@@ -173,14 +174,14 @@ class BatailleNavale:
                 os.system('cls')
                 print("Grille de jeu actuelle :")
                 grille_adverse = self.grille_def_j2
-                afficher_couple_grilles(self.grille_def_j1, self.grille_att_j1)
+                afficher_couple_plateau(self.grille_def_j1, self.grille_att_j1)
             else:
                 os.system('cls')
                 input(f"Au tour du Joueur {self.pseudo_j2} (tapez 'entrer' pour continuer)\n")
                 os.system('cls')
                 print("Grille de jeu actuelle :")
                 grille_adverse = self.grille_def_j1
-                afficher_couple_grilles(self.grille_def_j2, self.grille_att_j2)
+                afficher_couple_plateau(self.grille_def_j2, self.grille_att_j2)
 
             ligne = self.ligne_tir()
             colonne = self.colonne_tir()

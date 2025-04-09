@@ -20,7 +20,7 @@ Methodes de classe :
 """
 
 from ModeJeu import ModeJeu, FactoryModeJeu
-from Grille import Grille, afficher_grille
+from Grille import Grille
 from Navire import FactoryNavire
 import os
 import pandas as pd

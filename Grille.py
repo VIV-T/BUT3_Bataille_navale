@@ -18,7 +18,8 @@ la methode self.reinit_plateau permet de réinitialiser  le plateau de jeu (matr
 Cette classe contient aussi deux méthodes d'affichage très utile notamment
 pour la classe BatailleNavale() et pour la classe ChoixStrategie().
 """
-
+from Tile import FactoryTile
+from Tools import get_plateau_symbole
 
 class Grille():
     # Variables privées
@@ -97,32 +98,30 @@ class Grille():
         for i in range(self.__nb_lignes):
             self.plateau.append([])
             for j in range(self.__nb_colonnes):
-                self.plateau[i].append("-")
+                case_jeu = FactoryTile().get_instance_tile()
+                self.plateau[i].append(case_jeu)
 
         return True
 
     def __eq__(self, other):
-        if self.plateau == other.plateau:
+        if get_plateau_symbole(self.plateau) == get_plateau_symbole(other.plateau):
             return True
         return False
 
 
-# Fonctions d'affichage
-def afficher_grille(grille):
-    result = ""
-    for ligne in grille:
-        result += " ".join(ligne) + "\n"
-        print(" ".join(ligne))
-    return result
+
+if __name__=="__main__" :
+    grille = Grille(10, 10)
+    grille.create()
+    plateau1 = grille.get_plateau()
+    plateau2 = grille.get_plateau()
+
+    #afficher_plateau(plateau=plateau1)
+    #afficher_couple_plateau(plateau1, plateau2)
+
+    grille_bis = Grille(10, 10)
+    grille_bis.create()
 
 
-def afficher_couple_grilles(plateau1, plateau2):
-    if len(plateau1) != len(plateau2) or len(plateau1[0]) != len(plateau2[0]):
-        raise ValueError("Les deux grilles sont de tailles différentes !")
-    result = ""
-    result += "     Vos navires :                      Champ de tir :\n"
-    for index_ligne in range(len(plateau1)):
-        result += "     " + " ".join(plateau1[index_ligne]) + "                " + " ".join(
-            plateau2[index_ligne]) + "\n"
-    print(result)
-    return (result)
+    if grille_bis == grille :
+        print(True)

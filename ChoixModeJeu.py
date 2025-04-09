@@ -35,11 +35,12 @@ Methodes de classe :
 import pandas as pd
 import os
 
-from Grille import Grille, afficher_grille
+from Grille import Grille
 from Navire import Navire, FactoryNavire
 from ast import literal_eval
 from CreationModeJeu import FactoryCreationModeJeu
 from ModeJeu import ModeJeu, FactoryModeJeu
+from Tools import afficher_plateau
 
 
 class ChoixModeJeu():
@@ -251,7 +252,7 @@ class ChoixModeJeu():
             os.system('cls')
             print(f"Vous avez choisi le mode de jeu : {self.get_mode_jeu().get_nom()}")
             print(f"La grille fait : {self.get_grille().get_nb_lignes()}x{self.get_grille().get_nb_colonnes()}")
-            afficher_grille(self.get_grille().get_plateau())
+            afficher_plateau(self.get_grille().get_plateau())
             print(f"\nDans ce mode de jeu, il y a {len(self.get_navires())} navires :\n")
             # Afficher un df pandas présentant les différents navires.
             self.afficher_navires(self.get_navires())

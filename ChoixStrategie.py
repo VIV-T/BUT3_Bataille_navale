@@ -52,11 +52,11 @@ import os
 import pandas as pd
 
 from unidecode import unidecode
-from Grille import Grille, afficher_grille
+from Grille import Grille
 from Strategie import Strategie, FactoryStrategie
 from CreationStrategie import FactoryCreationStrategie
 from ModeJeu import ModeJeu
-
+from Tools import afficher_plateau
 
 class ChoixStrategie():
     # Getters
@@ -151,7 +151,7 @@ class ChoixStrategie():
 
             self.instance_grille.create()
             self.strategie.placement_navires(self.instance_grille.plateau, self.strategie.informations)
-            afficher_grille(self.instance_grille.plateau)
+            afficher_plateau(self.instance_grille.plateau)
             # permet au joueur d'apprécier l'affichage de sa strategie et l'input sert aussi de confirmation
             input("Tapez 'entrer' pour continuer\n")
             return True
@@ -206,7 +206,7 @@ class ChoixStrategie():
                 # On place la strategie dans la grille
                 strategie_choisie.placement_navires(self.instance_grille.plateau, strategie_choisie.informations)
                 # On l'affiche
-                afficher_grille(self.instance_grille.plateau)
+                afficher_plateau(self.instance_grille.plateau)
 
                 # Confirmation du choix de la strategie
                 choix_action_confirmation_strategie = "Confirmez votre choix ?"
@@ -227,7 +227,7 @@ class ChoixStrategie():
 
             self.instance_grille.create()
             self.strategie.placement_navires(self.instance_grille.plateau, self.strategie.informations)
-            afficher_grille(self.instance_grille.plateau)
+            afficher_plateau(self.instance_grille.plateau)
             # permet au joueur d'apprécier l'affichage de sa strategie et l'input sert aussi de confirmation
             input("\nTapez 'entrer' pour continuer\n")
             return True

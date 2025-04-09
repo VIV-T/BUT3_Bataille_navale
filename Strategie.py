@@ -35,10 +35,10 @@ Methodes de classes :
 """
 import pandas as pd
 
-from Grille import Grille, afficher_grille
+from Grille import Grille
 from Navire import Navire
 from copy import deepcopy
-
+from Tools import afficher_plateau
 
 class Strategie():
 
@@ -194,7 +194,7 @@ class Strategie():
             critere_bool = self.verifier_placabilite()
 
         if critere_bool:
-            afficher_grille(self.grille.plateau)
+            afficher_plateau(self.grille.plateau)
             return True
         else:
             print('Stratégie non valide !')

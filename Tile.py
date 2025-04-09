@@ -8,10 +8,10 @@ Usage potentiellement utile pour toutes les question d'affichage.
 """
 
 # Imports
-
+from Navire import Navire
 
 # Classe 
-class Case() :
+class Tile() :
     # Variables privées
     _statut : str | None
     _navire : Navire | None
@@ -57,10 +57,12 @@ class Case() :
     def __eq__(self, other):
         pass
 
-class FactoryCase() :
-    def get_instance_case(self) :
-        return self.case
+class FactoryTile() :
+    def get_instance_tile(self) :
+        return self.tile
 
     def __init__(self):
-        self.case = Case()
-        # Apple des setters de cases avec les paramètres du constructeur.
+        self.tile = Tile()
+        self.tile.set_navire()
+        self.tile.set_symbole()
+        

@@ -1,5 +1,6 @@
 import unittest
-from Grille import Grille, afficher_grille, afficher_couple_grilles
+from Grille import Grille
+from Tools import get_plateau_symbole, afficher_plateau, afficher_couple_plateau
 
 
 class TestGrille(unittest.TestCase):
@@ -19,7 +20,7 @@ class TestGrille(unittest.TestCase):
              ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
              ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
              ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-             ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']], self.grille.plateau)
+             ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']], get_plateau_symbole(self.grille.plateau))
         self.assertEqual(10, self.grille.get_nb_lignes())
         self.assertEqual(10, self.grille.get_nb_colonnes())
 
@@ -137,7 +138,7 @@ class TestGrille(unittest.TestCase):
 
     ## Méthodes de classe
     # afficher_grille
-    def test_afficher_grille_10_10(self) -> None:
+    def test_afficher_plateau_10_10(self) -> None:
         self.grille = Grille(10, 10)
         self.grille.create()
         self.assertEqual(("- - - - - - - - - -\n"
@@ -149,9 +150,9 @@ class TestGrille(unittest.TestCase):
                           "- - - - - - - - - -\n"
                           "- - - - - - - - - -\n"
                           "- - - - - - - - - -\n"
-                          "- - - - - - - - - -\n"), afficher_grille(self.grille.plateau))
+                          "- - - - - - - - - -\n"), afficher_plateau(self.grille.plateau))
 
-    def test_afficher_grille_10_5(self) -> None:
+    def test_afficher_plateau_10_5(self) -> None:
         self.grille = Grille(10, 5)
         self.grille.create()
         self.assertEqual(("- - - - -\n"
@@ -163,19 +164,19 @@ class TestGrille(unittest.TestCase):
                           "- - - - -\n"
                           "- - - - -\n"
                           "- - - - -\n"
-                          "- - - - -\n"), afficher_grille(self.grille.plateau))
+                          "- - - - -\n"), afficher_plateau(self.grille.plateau))
 
-    def test_afficher_grille_5_10(self) -> None:
+    def test_afficher_plateau_5_10(self) -> None:
         self.grille = Grille(5, 10)
         self.grille.create()
         self.assertEqual(("- - - - - - - - - -\n"
                           "- - - - - - - - - -\n"
                           "- - - - - - - - - -\n"
                           "- - - - - - - - - -\n"
-                          "- - - - - - - - - -\n"), afficher_grille(self.grille.plateau))
+                          "- - - - - - - - - -\n"), afficher_plateau(self.grille.plateau))
 
     # afficher_couple_grille
-    def test_afficher_couple_grilles_2_10_10(self):
+    def test_afficher_couple_plateaux_2_10_10(self):
         # intialisation des grilles
         self.grille1 = Grille(10, 10)
         self.grille2 = Grille(10, 10)
@@ -195,9 +196,9 @@ class TestGrille(unittest.TestCase):
             "     - - - - - - - - - -                - - - - - - - - - -\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n"),
-            afficher_couple_grilles(self.grille1.plateau, self.grille2.plateau))
+            afficher_couple_plateau(self.grille1.plateau, self.grille2.plateau))
 
-    def test_afficher_couple_grilles_2_5_5(self):
+    def test_afficher_plateaux_grilles_2_5_5(self):
         # intialisation des grilles
         self.grille1 = Grille(5, 5)
         self.grille2 = Grille(5, 5)
@@ -212,9 +213,9 @@ class TestGrille(unittest.TestCase):
             "     - - - - -                - - - - -\n"
             "     - - - - -                - - - - -\n"
             "     - - - - -                - - - - -\n",
-            afficher_couple_grilles(self.grille1.plateau, self.grille2.plateau))
+            afficher_couple_plateau(self.grille1.plateau, self.grille2.plateau))
 
-    def test_afficher_couple_grilles_tailles_differentes_lignes(self):
+    def test_afficher_couple_plateaux_tailles_differentes_lignes(self):
         # intialisation des grilles
         self.grille1 = Grille(10, 10)
         self.grille2 = Grille(10, 5)
@@ -235,11 +236,11 @@ class TestGrille(unittest.TestCase):
                 "                                        - - - - - - - - - -\n"
                 "                                        - - - - - - - - - -\n"
                 "                                        - - - - - - - - - -\n"),
-                afficher_couple_grilles(self.grille1.plateau, self.grille2.plateau))
+                afficher_couple_plateau(self.grille1.plateau, self.grille2.plateau))
         except ValueError as current_error:
             self.assertEqual("Les deux grilles sont de tailles différentes !", str(current_error))
 
-    def test_afficher_couple_grilles_tailles_differentes_colonnes(self):
+    def test_afficher_couple_plateaux_tailles_differentes_colonnes(self):
         # intialisation des grilles
         self.grille1 = Grille(10, 10)
         self.grille2 = Grille(10, 5)
@@ -260,9 +261,10 @@ class TestGrille(unittest.TestCase):
                 "     - - - - - - - - - -                - - - - -\n"
                 "     - - - - - - - - - -                - - - - -\n"
                 "     - - - - - - - - - -                - - - - -\n"),
-                afficher_couple_grilles(self.grille1.plateau, self.grille2.plateau))
+                afficher_couple_plateau(self.grille1.plateau, self.grille2.plateau))
         except ValueError as current_error:
             self.assertEqual("Les deux grilles sont de tailles différentes !", str(current_error))
+
 
     # reinit_plateau
     def test_reinit_plateau_cas_nominal(self):
