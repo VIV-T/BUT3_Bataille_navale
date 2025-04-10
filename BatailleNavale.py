@@ -133,12 +133,24 @@ class BatailleNavale:
 
         # mdofocation du symbole si tir = touché
         else:
-            initiale = grille_subit_Attaque[ligne - 1][colonne - 1].get_symbole()
-            grille_subit_Attaque[ligne - 1][colonne - 1].set_statut("hit")
-            grille_d_Attaque[ligne - 1][colonne - 1].set_statut("hit")
+            navire = grille_subit_Attaque[ligne - 1][colonne - 1].get_navire()
+            initiale = navire.get_symbole()
+            grille_subit_Attaque[ligne - 1][colonne - 1].set_statut("hit", navire = navire)
+            grille_d_Attaque[ligne - 1][colonne - 1].set_statut("hit", navire = navire)
             if self.navire_coule(initiale, grille_subit_Attaque):
-                grille_subit_Attaque[ligne - 1][colonne - 1].set_statut("cast")
-                grille_d_Attaque[ligne - 1][colonne - 1].set_statut("cast")
+                grille_subit_Attaque[ligne - 1][colonne - 1].set_statut("cast", navire = navire)
+                grille_d_Attaque[ligne - 1][colonne - 1].set_statut("cast", navire = navire)
+
+                # Modification du statut dee toute les cases du navire coulé
+                for grille in [grille_subit_Attaque, grille_d_Attaque] :
+                    for ligne in grille :
+                        for tile in ligne :
+                            try : 
+                                if tile.get_navire() == navire :
+                                    tile.set_statut("cast", navire = navire)
+                            except : 
+                                pass
+                            
                 print("Navire coulé !")
                 return "Touché, Coulé"
             return "Touché"

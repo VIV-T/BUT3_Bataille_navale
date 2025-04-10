@@ -81,7 +81,7 @@ class Navire():
                 return True
             return False
         except:
-            print("Vous ne comparez pas 2 instances de la classe Navire")
+            raise ValueError("Vous ne comparez pas 2 instances de la classe Navire")
 
     def __hash__(self):
         return hash((self.nom, self.taille))

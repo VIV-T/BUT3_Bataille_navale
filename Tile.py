@@ -53,7 +53,7 @@ class Tile() :
         return True
 
 
-    def set_statut(self, statut : str | None = None): 
+    def set_statut(self, statut : str | None = None, navire : Navire|None = None): 
             match statut :
                 case None :
                     self._statut = None
@@ -64,10 +64,24 @@ class Tile() :
                 # touché
                 case "hit" : 
                     self._statut = "hit"
+                    # cas particulier : changement de la valeur de "self.navire" pour la grille d'attaque:
+                    # permet de transferer l'information pour l'IA avance.
+                    try :
+                        if self.get_navire() is None and navire is not None :
+                            self.set_navire(navire=navire)
+                    except :
+                        pass
                     self.set_symbole("X")
                 # coulé
                 case "cast" : 
                     self._statut = "cast"
+                    # cas particulier : changement de la valeur de "self.navire" pour la grille d'attaque:
+                    # permet de transferer l'information pour l'IA avance.
+                    try :
+                        if self.get_navire() is None and navire is not None :
+                            self.set_navire(navire=navire)
+                    except :
+                        pass
                     self.set_symbole("X")
 
     # Constructeur

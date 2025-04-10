@@ -11,6 +11,7 @@ On instancie la classe IA en precisant son niveau :
 import random
 import seaborn as sns
 import matplotlib.pyplot as plt
+import os
 from Tools_IA import generer_configurations, genere_matrice_proba, get_ligne_colonne_matrice_proba
 
 
@@ -48,6 +49,10 @@ class IA():
 
         # enregistrement de la matrice de densité
         sns.heatmap(matrice_proba)
+        try : 
+            os.remove('proba_densite.png')
+        except :
+            pass
         plt.savefig('proba_densite.png')
 
         ligne, colonne = get_ligne_colonne_matrice_proba(matrice_proba)

@@ -103,10 +103,15 @@ def generer_configurations(plateau_cible, navires : set):
                 nb_hits += 1
             
 
-    # Si un ou plusieurs navires ont été coulé, les supprime du dict qui va servir a trouver toutes les configuration possible avec les navires restant.
+    # Si un ou plusieurs navires ont été coulé, 
+    # on les supprime du dict qui va servir a trouver toutes les configuration possible avec les navires restant.
+    # navire_bis permet simplement de pouvoir iterer sur navire en modifiant ses element sans obtenir d'erreur 
+    navires_bis = deepcopy(navires)
     if len(navires_coules) > 0 :
-        for navire in navires_coules :
-            navires.remove(navire)
+        for navire_coule in navires_coules :
+            for navire in navires_bis :
+                if navire == navire_coule : 
+                    navires.remove(navire)
 
     # transformation du set en list pour pouvoir faire de la recursivité
     navires = list(navires)
