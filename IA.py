@@ -54,6 +54,8 @@ class IA():
         except :
             pass
         plt.savefig('proba_densite.png')
+        plt.close()
+        
 
         ligne, colonne = get_ligne_colonne_matrice_proba(matrice_proba)
 
