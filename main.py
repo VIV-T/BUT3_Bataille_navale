@@ -141,4 +141,4 @@ if __name__ == "__main__":
                                  navires,
                                  grille).get_strategie()
 
-    BatailleNavale(navires, strategie_j1, strategie_j2, grille,nom_j1, nom_j2, level_IA="avancé")
+    BatailleNavale(navires, strategie_j1, strategie_j2, grille,nom_j1, nom_j2, level_IA="intermédiaire")

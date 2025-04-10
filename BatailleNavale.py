@@ -47,7 +47,7 @@ import random
 from copy import deepcopy
 from Grille import Grille
 from Strategie import Strategie
-from Tools import afficher_couple_plateau, get_plateau_symbole
+from Tools import afficher_couple_plateau, get_plateau_symbole, afficher_plateau
 from IA import IA
 
 
@@ -236,6 +236,7 @@ class BatailleNavale:
             resultat = self.tir(2, ligne, colonne)
             print(resultat)
             print(ligne, colonne)
+            afficher_plateau(self.grille_def_j1)
             input("Tapez 'entrer' pour continuer")
 
             if resultat == "Raté":

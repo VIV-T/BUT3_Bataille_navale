@@ -12,8 +12,8 @@ import random
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
-from Tools_IA import generer_configurations, genere_matrice_proba, get_ligne_colonne_matrice_proba
-
+from Tools_IA import generer_configurations, genere_matrice_proba, get_ligne_colonne_matrice_proba, trouver_coordonnees_ciblees
+from Tools import afficher_plateau
 
 class IA():
     def __init__(self, level : str):
@@ -25,7 +25,7 @@ class IA():
             case "débutant" :
                 ligne, colonne = self.play_debutant(plateau_cible=plateau_cible)
             case "intermédiaire" :
-                pass
+                ligne, colonne = self.play_intermediaire(plateau_cible=plateau_cible, navires=navires)
             case "avancé" :
                 ligne, colonne = self.play_avance(plateau_cible=plateau_cible, navires=navires)
             case "pro" :
@@ -41,6 +41,29 @@ class IA():
 
         return ligne, colonne
     
+    # tir sur des coordonnées aléatoires selon le schema en croix - depend de la taille du plus petit navire
+    def play_intermediaire(self, plateau_cible, navires) :
+        # A partir du plateau cible => trouver la longueur minimale d'un navire
+        longueur_min = min(list(map(lambda navire : navire.get_taille(),navires)))
+        liste_coord_ciblee = trouver_coordonnees_ciblees(plateau_cible=plateau_cible)
+
+        # Evitons de tirer sur des coordonnees deja ciblees...
+        while True :
+            # les facteur a permettent de tirer aleatoirement dans la grille
+            # le facteur b, commun aux lignes et colonnes, permet de s'assurer de quadriller la grille selon la taille minimale.
+            a_ligne = random.randint(0, len(plateau_cible[0])//2)
+            a_colonne = random.randint(0, len(plateau_cible[0])//2)
+            b = random.randint(0, longueur_min-1)
+
+            ligne = longueur_min*a_ligne+b
+            colonne = longueur_min*a_colonne+b
+
+            if (ligne, colonne) not in liste_coord_ciblee :
+                if ligne < len(plateau_cible) and colonne < len(plateau_cible[0]) :
+                    break
+        
+        return ligne, colonne
+     
 
     def play_avance(self, plateau_cible, navires :set):
         all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires)

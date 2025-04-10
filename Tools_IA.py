@@ -1,3 +1,19 @@
+########################################## IA intermediaire ##########################################
+def trouver_coordonnees_ciblees(plateau_cible) :
+    liste_coord_ciblees = []
+
+    for nb_ligne in range(len(plateau_cible)) :
+        for nb_colonne in range(len(plateau_cible[0])) :
+            if plateau_cible[nb_ligne][nb_colonne].get_statut() != None :
+                liste_coord_ciblees.append((nb_ligne, nb_colonne))
+
+    return liste_coord_ciblees
+
+
+
+
+########################################## IA avancé ##########################################
+
 ### Toutes les configurations possibles
 
 from Tools import get_plateau_symbole, afficher_plateau
@@ -231,13 +247,30 @@ if __name__=="__main__" :
     #afficher_plateau(plateau=plateau_cible)
     #print("")
 
-    all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires_test)
+
+    """data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "cuirassé"],
+                                    "taille": [2, 3, 4], "coord_x": [1, 5, 3],
+                                    "coord_y": [1, 1, 5], "orientation": ["S", "E", "O"]}
+    
+    inputs_strategie = pd.DataFrame(data_inputs_strategie)
+    strategie_j2 = FactoryStrategie(inputs_strategie,
+                                 navires_test,
+                                 grille_test).get_strategie()
+    
+    plateau_strategie = strategie_j2.get_grille().get_plateau()
+    afficher_plateau(plateau_strategie)
+    print("")"""
+
+    res = trouver_coordonnees_ciblees(plateau_cible=plateau_cible)
+    print(res)
+
+"""    all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires_test)
 
     nb_total_config = len(all_config)
 
-    print(f"""
+    print(f""
           Le nombre total de configuration possible est : {nb_total_config}
-          """)
+          "")
 
 
     matrice_proba = genere_matrice_proba(all_config=all_config)
@@ -249,4 +282,4 @@ if __name__=="__main__" :
     print(ligne, colonne)
 
     
-    plt.show()
+    plt.show()"""
