@@ -9,6 +9,8 @@ On instancie la classe IA en precisant son niveau :
 
 """
 import random
+import seaborn as sns
+import matplotlib.pyplot as plt
 from Tools_IA import generer_configurations, genere_matrice_proba, get_ligne_colonne_matrice_proba
 
 
@@ -27,7 +29,9 @@ class IA():
                 ligne, colonne = self.play_avance(plateau_cible=plateau_cible, navires=navires)
             case "pro" :
                 pass
-        return ligne, colonne
+
+        # Ajout de 1 pour passer des index (liste python) au coordonnées du plateau.
+        return ligne+1, colonne+1
 
     # tir sur des coordonnées aléatoires
     def play_debutant(self, plateau_cible) :
@@ -41,6 +45,10 @@ class IA():
         all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires)
 
         matrice_proba = genere_matrice_proba(all_config=all_config)
+
+        # enregistrement de la matrice de densité
+        sns.heatmap(matrice_proba)
+        plt.savefig('proba_densite.png')
 
         ligne, colonne = get_ligne_colonne_matrice_proba(matrice_proba)
 
