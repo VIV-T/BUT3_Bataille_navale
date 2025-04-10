@@ -9,6 +9,7 @@ On instancie la classe IA en precisant son niveau :
 
 """
 import random
+from Tools_IA import generer_configurations, genere_matrice_proba, get_ligne_colonne_matrice_proba
 
 
 class IA():
@@ -16,17 +17,17 @@ class IA():
         self._level = level 
 
 
-    def play_IA(self, plateau_cible) :
-        match self.level :
+    def play_IA(self, plateau_cible, navires :set) :
+        match self._level :
             case "débutant" :
                 ligne, colonne = self.play_debutant(plateau_cible=plateau_cible)
             case "intermédiaire" :
                 pass
             case "avancé" :
-                pass
+                ligne, colonne = self.play_avance(plateau_cible=plateau_cible, navires=navires)
             case "pro" :
                 pass
-
+        return ligne, colonne
 
     # tir sur des coordonnées aléatoires
     def play_debutant(self, plateau_cible) :
@@ -36,5 +37,11 @@ class IA():
         return ligne, colonne
     
 
-    def play_avance(self, plateau_cible):
-        pass
+    def play_avance(self, plateau_cible, navires :set):
+        all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires)
+
+        matrice_proba = genere_matrice_proba(all_config=all_config)
+
+        ligne, colonne = get_ligne_colonne_matrice_proba(matrice_proba)
+
+        return ligne, colonne

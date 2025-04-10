@@ -48,13 +48,16 @@ from copy import deepcopy
 from Grille import Grille
 from Strategie import Strategie
 from Tools import afficher_couple_plateau, get_plateau_symbole
+from IA import IA
 
 
 class BatailleNavale:
     def __init__(self, navires: set, strategie_joueur1: Strategie, strategie_joueur2: Strategie,
                  instance_grille: Grille = Grille(10, 10), pseudo_j1: str = 'Ordinateur 1',
                  pseudo_j2: str = 'Ordinateur 2',
-                 test: bool = False):
+                 test: bool = False, level_IA : str = "débutant"):
+
+        self.IA = IA(level=level_IA)
 
         self.navires = navires  # de la forme : {Navire}
         # répertoire de tout les navires de chacun des joueurs à placer sur la grille
@@ -210,12 +213,18 @@ class BatailleNavale:
         tour_ordinateur = True
         while tour_ordinateur:
             # tir sur des coordonnées aléatoires
-            ligne = random.randint(0, len(self.modele_plateau[0]))
-            colonne = random.randint(0, len(self.modele_plateau[1]))
+            #ligne = random.randint(0, len(self.modele_plateau[0]))
+            #colonne = random.randint(0, len(self.modele_plateau[1]))
+            
             grille_adverse = self.grille_def_j1
+            
+            # Appel de la méthode de la classe IA
+            ligne, colonne = self.IA.play_IA(self.grille_att_j2, navires=self.navires)
 
             resultat = self.tir(2, ligne, colonne)
             print(resultat)
+            print(ligne, colonne)
+            input("Tapez 'entrer' pour continuer")
 
             if resultat == "Raté":
                 tour_ordinateur = False

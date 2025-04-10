@@ -1,6 +1,6 @@
+### Toutes les configurations possibles
+
 from Tools import get_plateau_symbole, afficher_plateau
-
-
 
 
 def est_valide(plateau_cible, ligne, colonne, taille, horizontal):
@@ -110,9 +110,7 @@ def generer_configurations(plateau_cible, navires : set):
 
     # transformation du set en list pour pouvoir faire de la recursivité
     navires = list(navires)
-    # conversion du plateau pour utiliser les symboles
-    plateau_cible_symbole = get_plateau_symbole(plateau_cible)
-
+    # creation d'un plateau vierge pour test
 
     def generer(index):
         if index == len(navires):
@@ -120,7 +118,10 @@ def generer_configurations(plateau_cible, navires : set):
                 afficher_plateau(plateau_cible)
                 print("")
                 print("")
-                configurations.append([ligne[:] for ligne in plateau_cible])
+                # conversion du plateau pour utiliser les symboles 
+                # -> plus simple dans le calcul de densité de probabilité
+                plateau_cible_symbole = get_plateau_symbole(plateau_cible)
+                configurations.append([ligne[:] for ligne in plateau_cible_symbole])
             return
 
         navire = navires[index]
@@ -138,11 +139,67 @@ def generer_configurations(plateau_cible, navires : set):
 
 
 
-# imports additionnels
+### Densité de proba
+from copy import deepcopy
+import numpy as np
+
+def analyse_config(config):
+    res = deepcopy(config)
+
+    for nb_ligne in range(len(config)) : 
+        for nb_colonne in range(len(config[nb_ligne])) :
+            match config[nb_ligne][nb_colonne] :
+                case "-" :
+                    res[nb_ligne][nb_colonne] = 0
+                case "0" :
+                    res[nb_ligne][nb_colonne] = 0
+                case "X" :
+                    res[nb_ligne][nb_colonne] = 0
+                case _ :
+                    res[nb_ligne][nb_colonne] = 1
+    return np.array(res)
+
+
+
+def genere_matrice_proba(all_config : list) : 
+    liste_analyse_placement = []
+
+    for config in all_config : 
+        liste_analyse_placement.append(analyse_config(config))
+
+    densite_proba_np = sum(liste_analyse_placement)/len(all_config)
+
+    # conversion en list(list) a la place d'un np array
+    densite_proba = densite_proba_np.tolist()
+
+    return densite_proba
+
+
+def get_ligne_colonne_matrice_proba(matrice_proba):
+    # Identifier le max dans la matrice de densité de proba
+    maximum = max(max(ligne) for ligne in matrice_proba)
+
+    # Identification des index relatifs à la case ciblée
+    for nb_ligne in range(len(matrice_proba)) :
+        for nb_colonne in range(len(matrice_proba[nb_ligne])) :
+            if maximum == matrice_proba[nb_ligne][nb_colonne] :
+                ligne = nb_ligne
+                colonne = nb_colonne
+                break
+        
+    return ligne, colonne
+
+
+
+### Imports additionnels
 from Navire import FactoryNavire
 from Grille import Grille
 from Strategie import FactoryStrategie
+
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 
 if __name__=="__main__" :
     ### SetUp
@@ -153,14 +210,38 @@ if __name__=="__main__" :
     porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
 
     navires = {cuirasse, fregate, sous_marin, torpilleur, porte_avions}
+    navires_test = {cuirasse, sous_marin, torpilleur}
 
     grille = Grille(10,10)
     grille.create()
-    plateau_cible = grille.get_plateau()
+
+    grille_test = Grille(5,5)
+    grille_test.create()
+
+    plateau_cible = grille_test.get_plateau()
 
     plateau_cible[0][0].set_statut("hit")
     plateau_cible[2][2].set_statut("fail")
 
     #afficher_plateau(plateau=plateau_cible)
+    #print("")
 
-    all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires)
+    all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires_test)
+
+    nb_total_config = len(all_config)
+
+    print(f"""
+          Le nombre total de configuration possible est : {nb_total_config}
+          """)
+
+
+    matrice_proba = genere_matrice_proba(all_config=all_config)
+
+    sns.heatmap(matrice_proba)
+
+    ligne, colonne = get_ligne_colonne_matrice_proba(matrice_proba=matrice_proba)
+
+    print(ligne, colonne)
+
+    
+    plt.show()

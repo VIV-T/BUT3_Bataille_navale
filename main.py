@@ -122,13 +122,23 @@ if __name__ == "__main__":
         # Rajouter du code pour initialiser la strategie de l'ordinateur (définie par défault).
         # La privatisation (théorique) du nom permet dans la classe BatailleNavale() de passer le jeu de l'ordinateur en auto.
         nom_j2 = '_Ordinateur'
-        # modifier ici, popur que l'ordinateur est une strategie aléatoire parmis les stratégies enregistrées.
-        data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
-                                 "taille": [2, 3, 3, 4, 5], "coord_x": [1, 5, 3, 5, 9],
-                                 "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
+
+        
+        # Modifier ici, pour que l'ordinateur est une strategie aléatoire parmis les stratégies enregistrées.
+        if mode_jeu.get_nom() == "Normal" :
+            {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
+                                    "taille": [2, 3, 3, 4, 5], "coord_x": [1, 5, 3, 5, 9],
+                                    "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
+        elif mode_jeu.get_nom() == "Blitz" : 
+            data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "cuirassé"],
+                                    "taille": [2, 3, 4], "coord_x": [1, 5, 3],
+                                    "coord_y": [1, 1, 5], "orientation": ["S", "E", "O"]}
+        else : 
+            raise ValueError("L'ordinateur n'a pas de strategie définie pour ce mode de jeu")
+            
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
         strategie_j2 = FactoryStrategie(inputs_strategie,
                                  navires,
-                                 Grille(10, 10)).get_strategie()
+                                 grille).get_strategie()
 
-    BatailleNavale(navires, strategie_j1, strategie_j2, Grille(10,10),nom_j1, nom_j2)
+    BatailleNavale(navires, strategie_j1, strategie_j2, grille,nom_j1, nom_j2, level_IA="avancé")
