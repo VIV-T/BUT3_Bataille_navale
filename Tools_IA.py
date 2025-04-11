@@ -41,7 +41,7 @@ def trouver_coord_case_adjacente(plateau_cible) :
 
 from Tools import get_plateau_symbole, afficher_plateau
 
-
+# Permet de vérifier pour chaque navire qu'il est possible de le placer de facon 'valide' dans le plateau_cible 
 def est_valide(plateau_cible, ligne, colonne, taille, horizontal):
     if horizontal:
         # condition sur la taille du plateau et du navire
@@ -66,6 +66,7 @@ def est_valide(plateau_cible, ligne, colonne, taille, horizontal):
                     return False
                 
     return True
+
 
 
 # Placement d'un navire dans le plateau_cible (pour une configuration)
@@ -97,7 +98,6 @@ def retirer_navire(grille, row, col, taille, horizontal):
 #   - Placement de tous les navires "vivants" => prise en compte des "hits" ("touchés") nécéssaires.
 #   - Prise en comptes des cases "touché" => s'assurer de la continuité entre les case navires et "touché" => si le nombre de tile occupée est la bonne, cela veut dire qu'un navire a été superposé à chaque "X" du plateau. 
 def configuration_valide(plateau_cible, navires, nb_hits):
-    ### 1er critère
     # set de symbole : permet de compter les symbole dans le plateau 
     symboles_navires = {navire.get_symbole() for navire in navires}
     # comptage du nombre de case devant être occupées
