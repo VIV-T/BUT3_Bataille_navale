@@ -68,7 +68,7 @@ def est_valide(plateau_cible, ligne, colonne, taille, horizontal):
     return True
 
 
-# Placement d'un navire dans le plateau_cible (pour une config)
+# Placement d'un navire dans le plateau_cible (pour une configuration)
 def placer_navire(plateau_cible, ligne, colonne, horizontal, navire):
     if horizontal:
         for i in range(navire.get_taille()):
@@ -81,7 +81,7 @@ def placer_navire(plateau_cible, ligne, colonne, horizontal, navire):
 
 
 
-# On retire le navire du plateau_cible 
+# On retire le navire du plateau_cible (pour une configuration)
 def retirer_navire(grille, row, col, taille, horizontal):
     if horizontal:
         for i in range(taille):
@@ -93,7 +93,7 @@ def retirer_navire(grille, row, col, taille, horizontal):
                 grille[row + i][col].set_navire(None)
 
 
-# Vérification que la configuration suit les cirtères de validités :
+# Vérification que la configuration suit les critères de validités :
 #   - Placement de tous les navires "vivants" => prise en compte des "hits" ("touchés") nécéssaires.
 #   - Prise en comptes des cases "touché" => s'assurer de la continuité entre les case navires et "touché" => si le nombre de tile occupée est la bonne, cela veut dire qu'un navire a été superposé à chaque "X" du plateau. 
 def configuration_valide(plateau_cible, navires, nb_hits):
@@ -118,13 +118,10 @@ def configuration_valide(plateau_cible, navires, nb_hits):
     if critere_tiles_occupee != nb_occuped_tiles : 
         return False
 
-    ### 2nd critère 
-
-
     return True
 
 
-
+# Permet de generer toutes les configurations envisageable pour un plateau cible et une liste de navires.
 def generer_configurations(plateau_cible, navires : set):
     configurations = []
 
@@ -156,6 +153,7 @@ def generer_configurations(plateau_cible, navires : set):
     navires = list(navires)
     # creation d'un plateau vierge pour test
 
+    # Fonction recursive de generation.
     def generer(index):
         if index == len(navires):
             if configuration_valide(plateau_cible, navires, nb_hits):
@@ -168,6 +166,7 @@ def generer_configurations(plateau_cible, navires : set):
                 configurations.append([ligne[:] for ligne in plateau_cible_symbole])
             return
 
+        # Placement du navire dans la configuration
         navire = navires[index]
         taille = navire.get_taille()
         for ligne in range(len(plateau_cible)):
@@ -187,6 +186,8 @@ def generer_configurations(plateau_cible, navires : set):
 from copy import deepcopy
 import numpy as np
 
+# Remplacement des symbole de navire par des 1 et le reste des case par des 0
+# Permet ensuite de calculer la densité de probalité pour un plateau_cible
 def analyse_config(config):
     res = deepcopy(config)
 
@@ -204,7 +205,7 @@ def analyse_config(config):
     return np.array(res)
 
 
-
+# Generation de la matrice de densité de probabilité
 def genere_matrice_proba(all_config : list) : 
     liste_analyse_placement = []
 
@@ -219,7 +220,8 @@ def genere_matrice_proba(all_config : list) :
     return densite_proba
 
 
-def get_ligne_colonne_matrice_proba(matrice_proba):
+# Permet de récupérer les coordonnées basées sur la matrice de densité de probabilité
+def get_coord_from_matrice_proba(matrice_proba):
     # Identifier le max dans la matrice de densité de proba
     maximum = max(max(ligne) for ligne in matrice_proba)
 

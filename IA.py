@@ -12,10 +12,13 @@ import random
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
-from Tools_IA import generer_configurations, genere_matrice_proba, get_ligne_colonne_matrice_proba, trouver_coordonnees_ciblees, trouver_coord_case_adjacente
+from Tools_IA import generer_configurations, genere_matrice_proba, get_coord_from_matrice_proba, trouver_coordonnees_ciblees, trouver_coord_case_adjacente
 from Tools import afficher_plateau
 
 class IA():
+    def get_level(self) :
+        return self._level
+
     def __init__(self, level : str):
         self._level = level 
 
@@ -88,6 +91,6 @@ class IA():
         plt.close()
         
 
-        ligne, colonne = get_ligne_colonne_matrice_proba(matrice_proba)
+        ligne, colonne = get_coord_from_matrice_proba(matrice_proba)
 
         return ligne, colonne
