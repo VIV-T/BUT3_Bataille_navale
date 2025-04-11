@@ -9,8 +9,31 @@ def trouver_coordonnees_ciblees(plateau_cible) :
 
     return liste_coord_ciblees
 
+def trouver_coord_case_adjacente(plateau_cible) :
 
-
+    for nb_ligne in range(len(plateau_cible)) : 
+        for nb_colonne in range(len(plateau_cible[0])) : 
+            # Si la case a été touchée : cibler les cases adjacentes.
+            if plateau_cible[nb_ligne][nb_colonne].get_statut() == "hit" :
+                liste_coord_adjacentes = [
+                    (nb_ligne-1, nb_colonne),
+                    (nb_ligne+1, nb_colonne),
+                    (nb_ligne, nb_colonne-1),
+                    (nb_ligne, nb_colonne+1)
+                ]
+                for couple_coord in liste_coord_adjacentes :
+                    try : 
+                        # on ne veut pas de coordonnées negatives !!!
+                        if couple_coord[0]<0 or couple_coord[1]<0 :
+                            raise ValueError
+                        
+                        if plateau_cible[couple_coord[0]][couple_coord[1]].get_symbole() == "-" :
+                            ligne = couple_coord[0]
+                            colonne = couple_coord[1]
+                            return ligne, colonne
+                    except :
+                        pass
+    return -1, -1
 
 ########################################## IA avancé ##########################################
 

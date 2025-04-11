@@ -12,7 +12,7 @@ import random
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
-from Tools_IA import generer_configurations, genere_matrice_proba, get_ligne_colonne_matrice_proba, trouver_coordonnees_ciblees
+from Tools_IA import generer_configurations, genere_matrice_proba, get_ligne_colonne_matrice_proba, trouver_coordonnees_ciblees, trouver_coord_case_adjacente
 from Tools import afficher_plateau
 
 class IA():
@@ -42,7 +42,15 @@ class IA():
         return ligne, colonne
     
     # tir sur des coordonnées aléatoires selon le schema en croix - depend de la taille du plus petit navire
+    # strategie : tir en croix + chasse quand "hit"
     def play_intermediaire(self, plateau_cible, navires) :
+        ## Recherche de navires touchés (case adjacentes)
+        ligne, colonne = trouver_coord_case_adjacente(plateau_cible=plateau_cible)
+        # Si une case adjacente non ciblée à été trouvée, on renvoie ses coordonnées.
+        if ligne != -1 :
+            return ligne, colonne
+
+        ## Tir croisé aléatoire
         # A partir du plateau cible => trouver la longueur minimale d'un navire
         longueur_min = min(list(map(lambda navire : navire.get_taille(),navires)))
         liste_coord_ciblee = trouver_coordonnees_ciblees(plateau_cible=plateau_cible)
