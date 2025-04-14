@@ -26,12 +26,12 @@ class TestTools(TestCase) :
         return super().setUp()
     
     def test_initialisation(self) :
-        self.IA_debutant = IA(level="débutant")
-        self.assertEqual("débutant", self.IA_debutant.get_level())
-        self.IA_intermediaire = IA(level="intermédiaire")
-        self.assertEqual("intermédiaire", self.IA_debutant.get_level())
-        self.IA_avance = IA(level="avancé")
-        self.assertEqual("avancé", self.IA_debutant.get_level())
+        self.IA_debutant = IA(level="debutant")
+        self.assertEqual("debutant", self.IA_debutant.get_level())
+        self.IA_intermediaire = IA(level="intermediaire")
+        self.assertEqual("intermediaire", self.IA_debutant.get_level())
+        self.IA_avance = IA(level="avance")
+        self.assertEqual("avance", self.IA_debutant.get_level())
 
         self.IA_test = IA(level="test")
         self.assertEqual("test", self.IA_debutant.get_level())

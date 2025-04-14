@@ -25,11 +25,11 @@ class IA():
 
     def play_IA(self, plateau_cible, navires :set) :
         match self._level :
-            case "débutant" :
+            case "debutant" :
                 ligne, colonne = self.play_debutant(plateau_cible=plateau_cible)
-            case "intermédiaire" :
+            case "intermediaire" :
                 ligne, colonne = self.play_intermediaire(plateau_cible=plateau_cible, navires=navires)
-            case "avancé" :
+            case "avance" :
                 ligne, colonne = self.play_avance(plateau_cible=plateau_cible, navires=navires)
             case "pro" :
                 pass

@@ -12,6 +12,7 @@ La fin de partie est gérée dans la classe BatailleNavale().
 import os
 
 import pandas as pd
+from unidecode import unidecode
 
 from ChoixStrategie import FactoryChoixStrategie
 from Strategie import FactoryStrategie
@@ -114,19 +115,47 @@ if __name__ == "__main__":
         strategie_j2 = informations_j2[1]
 
     elif choix_adversaire == 'ordinateur':
+        ### Choix de la difficuté : le niveau de l'IA (debutant, intermediaire, avance)
+        choix_level=''
+
+        # Le booléen choix_valide_joueur permet de gérer les cas d'erreur sur les inputs et d'y répondre de manière efficace :
+        # en redemandant à l'utilisateur de rentrer sa données en précisant pourquoi cela n'a pas marché la 1ère fois.
+        choix_level_valide = False
+        while not choix_level_valide :
+            # Choix de l'adversaire + rajouter une gestion d'erreur + texte de réponse adapté à la variable.
+            choix_level = input("Choisissez le niveau de l'IA (debutant, intermediaire, avance)\n")
+
+            try :
+                choix_level = choix_level.lower()
+                choix_level = choix_level.replace(" ", "")
+                choix_level = unidecode(choix_level)
+                assert choix_level == 'debutant' or choix_level == 'intermediaire' or choix_level == 'avance'
+                choix_level_valide = True
+            except AssertionError :
+                print('Erreur !\nVeuillez saisir une valeur valide.\n')
+
+        print("")
+        choix_level.lower()
+        input(f"Vous avez choisi la difficulté : {choix_level}\n\n")
+
+        # A modifier : pour le moment on evite d'utiliser l'IA avancer sur les autre mode de jeu que 'Blitz'
+        if choix_level=="avance" and mode_jeu.get_nom() != "Blitz" :
+            choix_level = "intermediaire"
+            input("Cependant l'IA avancée n'est pas encore disponible pour ce mode de jeu, vous jouez donc contre l'IA intermediaire.\n")
+
         # 1er joueur
         information_j1 = choix_nom_et_strategie_joueur(1, navires=navires, grille=grille, mode_jeu=mode_jeu)
         nom_j1 = information_j1[0]
         strategie_j1 = information_j1[1]
 
+
         # Rajouter du code pour initialiser la strategie de l'ordinateur (définie par défault).
         # La privatisation (théorique) du nom permet dans la classe BatailleNavale() de passer le jeu de l'ordinateur en auto.
         nom_j2 = '_Ordinateur'
-
         
         # Modifier ici, pour que l'ordinateur est une strategie aléatoire parmis les stratégies enregistrées.
         if mode_jeu.get_nom() == "Normal" :
-            {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
+            data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
                                     "taille": [2, 3, 3, 4, 5], "coord_x": [1, 5, 3, 5, 9],
                                     "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
         elif mode_jeu.get_nom() == "Blitz" : 
@@ -141,4 +170,4 @@ if __name__ == "__main__":
                                  navires,
                                  grille).get_strategie()
 
-    BatailleNavale(navires, strategie_j1, strategie_j2, grille,nom_j1, nom_j2, level_IA="intermédiaire")
+    BatailleNavale(navires, strategie_j1, strategie_j2, grille,nom_j1, nom_j2, level_IA=choix_level)
