@@ -27,6 +27,7 @@ def trouver_coord_case_adjacente(plateau_cible) :
                         if couple_coord[0]<0 or couple_coord[1]<0 :
                             raise ValueError
                         
+                        # Si la case adjacente n'a pas encore ete ciblee, on renvoie ses coordonnees
                         if plateau_cible[couple_coord[0]][couple_coord[1]].get_symbole() == "-" :
                             ligne = couple_coord[0]
                             colonne = couple_coord[1]

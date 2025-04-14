@@ -33,6 +33,8 @@ class IA():
                 ligne, colonne = self.play_avance(plateau_cible=plateau_cible, navires=navires)
             case "pro" :
                 pass
+            case _ :
+                raise ValueError("Le niveau de l'IA n'est pas correctement défini.")
 
         # Ajout de 1 pour passer des index (liste python) au coordonnées du plateau.
         return ligne+1, colonne+1
