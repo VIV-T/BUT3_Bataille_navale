@@ -1,3 +1,6 @@
+import random
+
+
 ########################################## IA intermediaire ##########################################
 def trouver_coordonnees_ciblees(plateau_cible) :
     liste_coord_ciblees = []
@@ -36,7 +39,47 @@ def trouver_coord_case_adjacente(plateau_cible) :
                         pass
     return -1, -1
 
+
+def cibler_coord_cross_random(plateau_cible, navires) : 
+    ## Tir croisé aléatoire
+    # A partir du plateau cible => trouver la longueur minimale d'un navire
+    longueur_min = min(list(map(lambda navire : navire.get_taille(),navires)))
+    liste_coord_ciblee = trouver_coordonnees_ciblees(plateau_cible=plateau_cible)
+
+
+    # Evitons de tirer sur des coordonnees deja ciblees...
+    while True :
+        # les facteur a permettent de tirer aleatoirement dans la grille
+        # le facteur b, commun aux lignes et colonnes, permet de s'assurer de quadriller la grille selon la taille minimale.
+        a_ligne = random.randint(0, len(plateau_cible[0])//2)
+        a_colonne = random.randint(0, len(plateau_cible[0])//2)
+        b = random.randint(0, longueur_min-1)
+
+        ligne = longueur_min*a_ligne+b
+        colonne = longueur_min*a_colonne+b
+
+        if (ligne, colonne) not in liste_coord_ciblee :
+            if ligne < len(plateau_cible) and colonne < len(plateau_cible[0]) :
+                break
+        
+    return ligne, colonne
+
+
+
 ########################################## IA avancé ##########################################
+
+### Verifier le nombre de case deja ciblee
+def check_nb_targeted_tile(plateau_cible) :
+    nb_targeted_tiles = 0
+
+    for ligne in plateau_cible :
+        for tile in ligne :
+            if tile.get_statut() is not None :
+                nb_targeted_tiles += 1
+
+    return nb_targeted_tiles
+
+
 
 ### Toutes les configurations possibles
 

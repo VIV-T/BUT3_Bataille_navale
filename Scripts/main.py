@@ -69,7 +69,6 @@ if __name__ == "__main__":
     print('Bienvenue dans le jeu de Bataille Navale !')
 
     ### Choix mode de jeu (normal - 10*10, blitz - 5*5, personnalisé - dépend des choix du joueur)
-    # /!\ Cela implique une modification des classes de création et d'enregistrement de stratégie (prise en compte du mode de jeu)
     choix_mode_jeu = FactoryChoixModeJeu()
 
     ### Initialisation des navires - a modifier en fonction des mode de jeux
@@ -138,10 +137,11 @@ if __name__ == "__main__":
         choix_level.lower()
         input(f"Vous avez choisi la difficulté : {choix_level}\n\n")
 
-        # A modifier : pour le moment on evite d'utiliser l'IA avancer sur les autre mode de jeu que 'Blitz'
-        if choix_level=="avance" and mode_jeu.get_nom() != "Blitz" :
-            choix_level = "intermediaire"
-            input("Cependant l'IA avancée n'est pas encore disponible pour ce mode de jeu, vous jouez donc contre l'IA intermediaire.\n")
+        # A modifier : pour le moment on evite d'utiliser l'IA avancer sur les autre mode de jeu que 'Blitz', 
+        # La raison : le temps d'execution expodentiellement proportionel à la taille de la grille et du nombre de navire
+        #if choix_level=="avance" and mode_jeu.get_nom() != "Blitz" :
+        #    choix_level = "intermediaire"
+        #    input("Cependant l'IA avancée n'est pas encore disponible pour ce mode de jeu, vous jouez donc contre l'IA intermediaire.\n")
 
         # 1er joueur
         information_j1 = choix_nom_et_strategie_joueur(1, navires=navires, grille=grille, mode_jeu=mode_jeu)

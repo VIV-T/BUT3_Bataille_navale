@@ -12,7 +12,7 @@ import random
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
-from Tools_IA import generer_configurations, genere_matrice_proba, get_coord_from_matrice_proba, trouver_coordonnees_ciblees, trouver_coord_case_adjacente
+from Tools_IA import generer_configurations, genere_matrice_proba, get_coord_from_matrice_proba, trouver_coord_case_adjacente, check_nb_targeted_tile, cibler_coord_cross_random
 from Tools import afficher_plateau
 
 class IA():
@@ -55,44 +55,43 @@ class IA():
         if ligne != -1 :
             return ligne, colonne
 
-        ## Tir croisé aléatoire
-        # A partir du plateau cible => trouver la longueur minimale d'un navire
-        longueur_min = min(list(map(lambda navire : navire.get_taille(),navires)))
-        liste_coord_ciblee = trouver_coordonnees_ciblees(plateau_cible=plateau_cible)
 
-        # Evitons de tirer sur des coordonnees deja ciblees...
-        while True :
-            # les facteur a permettent de tirer aleatoirement dans la grille
-            # le facteur b, commun aux lignes et colonnes, permet de s'assurer de quadriller la grille selon la taille minimale.
-            a_ligne = random.randint(0, len(plateau_cible[0])//2)
-            a_colonne = random.randint(0, len(plateau_cible[0])//2)
-            b = random.randint(0, longueur_min-1)
 
-            ligne = longueur_min*a_ligne+b
-            colonne = longueur_min*a_colonne+b
-
-            if (ligne, colonne) not in liste_coord_ciblee :
-                if ligne < len(plateau_cible) and colonne < len(plateau_cible[0]) :
-                    break
-        
+        nb_targeted_tile = check_nb_targeted_tile(plateau_cible=plateau_cible)
+        if nb_targeted_tile < 7 :
+            coord_valides = False 
+            while not coord_valides : 
+                ligne, colonne = cibler_coord_cross_random(plateau_cible=plateau_cible, navires=navires)
+                if ligne > 3 and ligne < 8 and colonne > 3 and colonne < 8 :
+                            coord_valides = True
+        else : 
+            ligne, colonne = cibler_coord_cross_random(plateau_cible=plateau_cible, navires=navires)
+            
         return ligne, colonne
      
 
     def play_avance(self, plateau_cible, navires :set):
-        all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires)
 
-        matrice_proba = genere_matrice_proba(all_config=all_config)
+        nb_targeted_tile = check_nb_targeted_tile(plateau_cible=plateau_cible)
+        ligne, colonne = self.play_intermediaire(plateau_cible, navires)
 
-        # enregistrement de la matrice de densité
-        sns.heatmap(matrice_proba)
-        try : 
-            os.remove('proba_densite.png')
-        except :
-            pass
-        plt.savefig('proba_densite.png')
-        plt.close()
-        
 
-        ligne, colonne = get_coord_from_matrice_proba(matrice_proba)
+
+        if nb_targeted_tile > 30 : 
+            all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires)
+
+            matrice_proba = genere_matrice_proba(all_config=all_config)
+
+            # enregistrement de la matrice de densité
+            sns.heatmap(matrice_proba)
+            try : 
+                os.remove('proba_densite.png')
+            except :
+                pass
+            plt.savefig('proba_densite.png')
+            plt.close()
+            
+
+            ligne, colonne = get_coord_from_matrice_proba(matrice_proba)
 
         return ligne, colonne
