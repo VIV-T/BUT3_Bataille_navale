@@ -34,6 +34,7 @@ Methodes de classe :
 
 import pandas as pd
 import os
+import re
 
 from Grille import Grille
 from Navire import Navire, FactoryNavire
@@ -106,14 +107,18 @@ class ChoixModeJeu():
         self.torpilleur = FactoryNavire(nom="torpilleur", taille=2).get_navire()
         self.porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
 
+        # set path to read backups
+        current_path = os.getcwd()
+        self.backups_path = re.split("Bataille_navale", current_path)[0] + "Bataille_navale\\Backups"
+
 
     # Lecture du fichier de sauvegarde csv
     def lecture_sauvegarde(self):
-        self.save = pd.read_csv('Backups\\sauvegardes_mode_jeux.csv', encoding="UTF-8")
+        self.save = pd.read_csv(f'{self.backups_path}\\sauvegardes_mode_jeux.csv', encoding="UTF-8")
 
     # Ecriture dans le fichier csv
     def ecriture_sauvegarde(self):
-        self.save.to_csv('Backups\\sauvegardes_mode_jeux.csv', index=False, encoding="UTF-8")
+        self.save.to_csv(f'{self.backups_path}\\sauvegardes_mode_jeux.csv', index=False, encoding="UTF-8")
 
     def main(self):
         # boucle nécessaire, car si l'utilisateur ne confirme pas son choix, il faut bien qu'il choisisse un mode de jeu.

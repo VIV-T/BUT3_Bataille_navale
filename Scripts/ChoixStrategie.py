@@ -50,6 +50,7 @@ Méthode de classe :
 """
 import os
 import pandas as pd
+import re
 
 from unidecode import unidecode
 from Grille import Grille
@@ -83,14 +84,18 @@ class ChoixStrategie():
         self.instance_grille = grille
         self.pseudo_joueur = pseudo_joueur
         self.strategie: Strategie | None = None
+        
+        # set path to read backups
+        current_path = os.getcwd()
+        self.backups_path = re.split("Bataille_navale", current_path)[0] + "Bataille_navale\\Backups"
 
     # Lecture du fichier et récupération des inputs_strategie enregistrées dans le référentiel.
     def lire_fichier_sauvegarde(self):
-        self.referentiel = pd.read_csv('Backups\\sauvegardes_strategies.csv', encoding="UTF-8")
+        self.referentiel = pd.read_csv(f'{self.backups_path}\\sauvegardes_strategies.csv', encoding="UTF-8")
 
     # On écrit le fichier de sauvegarde à partir des données du référentiel.
     def ecrire_fichier_sauvegarde(self):
-        self.referentiel.to_csv('Backups\\sauvegardes_strategies.csv', index=False, encoding="UTF-8")
+        self.referentiel.to_csv(f'{self.backups_path}\\sauvegardes_strategies.csv', index=False, encoding="UTF-8")
 
     # Méthode principale qui appelle toutes les autres en fonction des choix du joueur.
     def main(self):
