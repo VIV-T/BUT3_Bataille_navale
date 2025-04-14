@@ -184,7 +184,7 @@ class ChoixStrategie():
 
                 while not valider_choix_numero_strategie:
                     choix_numero_strategie = input(
-                        "Quelle stratégie voulez-vous choisir ?  (Choisir une numéro de stratégie)\n")
+                        "Quelle stratégie voulez-vous choisir ?  (Choisir un numéro de stratégie)\n")
                     print("")
 
                     try:
