@@ -1,12 +1,12 @@
 from unittest import TestCase
-from Navire import Navire, FactoryNavire
-from Grille import Grille
-from ChoixStrategie import ChoixStrategie
-from ModeJeu import FactoryModeJeu
 import pandas as pd
 from copy import deepcopy
 import numpy as np
 
+from Scripts.Navire import FactoryNavire
+from Scripts.Grille import Grille
+from Scripts.ChoixStrategie import ChoixStrategie
+from Scripts.ModeJeu import FactoryModeJeu
 
 class TestChoixStrategie(TestCase):
     def setUp(self):

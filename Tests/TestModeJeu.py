@@ -1,6 +1,7 @@
 import unittest
-from ModeJeu import ModeJeu
-from Navire import FactoryNavire
+
+from Scripts.ModeJeu import ModeJeu
+from Scripts.Navire import FactoryNavire
 
 
 class TestModeJeu(unittest.TestCase):

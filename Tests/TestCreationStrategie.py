@@ -1,7 +1,8 @@
 from unittest import TestCase
-from Navire import Navire, FactoryNavire
-from CreationStrategie import CreationStrategie
-from Grille import Grille
+
+from Scripts.Navire import FactoryNavire
+from Scripts.CreationStrategie import CreationStrategie
+from Scripts.Grille import Grille
 
 
 class TestCreationStrategie(TestCase):

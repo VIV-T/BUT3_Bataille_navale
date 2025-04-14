@@ -1,7 +1,6 @@
 import unittest
-from sys import excepthook
 
-from Navire import Navire
+from Scripts.Navire import Navire
 
 
 class TestNavire(unittest.TestCase):

@@ -106,13 +106,14 @@ class ChoixModeJeu():
         self.torpilleur = FactoryNavire(nom="torpilleur", taille=2).get_navire()
         self.porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
 
+
     # Lecture du fichier de sauvegarde csv
     def lecture_sauvegarde(self):
-        self.save = pd.read_csv('sauvegardes_mode_jeux.csv', encoding="UTF-8")
+        self.save = pd.read_csv('Backups\\sauvegardes_mode_jeux.csv', encoding="UTF-8")
 
     # Ecriture dans le fichier csv
     def ecriture_sauvegarde(self):
-        self.save.to_csv('sauvegardes_mode_jeux.csv', index=False, encoding="UTF-8")
+        self.save.to_csv('Backups\\sauvegardes_mode_jeux.csv', index=False, encoding="UTF-8")
 
     def main(self):
         # boucle nécessaire, car si l'utilisateur ne confirme pas son choix, il faut bien qu'il choisisse un mode de jeu.

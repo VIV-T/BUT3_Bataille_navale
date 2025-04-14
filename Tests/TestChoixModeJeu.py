@@ -1,12 +1,12 @@
+from unittest import TestCase
 import numpy as np
 import pandas as pd
-
 from copy import deepcopy
-from unittest import TestCase
-from ChoixModeJeu import ChoixModeJeu
-from Navire import FactoryNavire
-from ModeJeu import FactoryModeJeu
-from Grille import Grille
+
+from Scripts.ChoixModeJeu import ChoixModeJeu
+from Scripts.Navire import FactoryNavire
+from Scripts.ModeJeu import FactoryModeJeu
+from Scripts.Grille import Grille
 
 
 class TestChoixModeJeu(TestCase):

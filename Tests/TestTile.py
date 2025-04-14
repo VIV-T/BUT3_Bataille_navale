@@ -1,5 +1,6 @@
 from unittest import TestCase
-from Tile import Tile
+
+from Scripts.Tile import Tile
 
 
 class TestTile(TestCase) :

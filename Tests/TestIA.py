@@ -1,8 +1,9 @@
 from unittest import TestCase
-from IA import IA
-from Navire import FactoryNavire
-from Grille import Grille
 from copy import deepcopy
+
+from Scripts.IA import IA
+from Scripts.Navire import FactoryNavire
+from Scripts.Grille import Grille
 
 class TestTools(TestCase) :
     def setUp(self):

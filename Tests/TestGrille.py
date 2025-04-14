@@ -1,6 +1,7 @@
 import unittest
-from Grille import Grille
-from Tools import get_plateau_symbole, afficher_plateau, afficher_couple_plateau
+
+from Scripts.Grille import Grille
+from Scripts.Tools import get_plateau_symbole, afficher_plateau, afficher_couple_plateau
 
 
 class TestGrille(unittest.TestCase):

@@ -1,8 +1,9 @@
 from unittest import TestCase
-from CreationModeJeu import CreationModeJeu
-from Grille import Grille
-from ModeJeu import FactoryModeJeu
-from Navire import FactoryNavire
+
+from Scripts.CreationModeJeu import CreationModeJeu
+from Scripts.Grille import Grille
+from Scripts.ModeJeu import FactoryModeJeu
+from Scripts.Navire import FactoryNavire
 
 
 class TestCreationModeJeu(TestCase):

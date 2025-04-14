@@ -1,10 +1,10 @@
+from unittest import TestCase
 import pandas as pd
 
-from unittest import TestCase
-from Navire import FactoryNavire
-from Grille import Grille
-from Strategie import FactoryStrategie
-from BatailleNavale import BatailleNavale
+from Scripts.Navire import FactoryNavire
+from Scripts.Grille import Grille
+from Scripts.Strategie import FactoryStrategie
+from Scripts.BatailleNavale import BatailleNavale
 
 
 class TestBatailleNavale(TestCase):

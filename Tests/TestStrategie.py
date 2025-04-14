@@ -1,9 +1,9 @@
 import unittest
 import pandas as pd
 
-from Strategie import Strategie
-from Navire import Navire, FactoryNavire
-from Grille import Grille
+from Scripts.Strategie import Strategie
+from Scripts.Navire import Navire, FactoryNavire
+from Scripts.Grille import Grille
 
 
 class TestStrategie(unittest.TestCase):

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Tools import get_plateau_symbole, afficher_plateau, afficher_couple_plateau
+from Scripts.Tools import get_plateau_symbole, afficher_plateau, afficher_couple_plateau
 
 
 class TestTools(TestCase) : 
