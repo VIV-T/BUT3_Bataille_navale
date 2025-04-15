@@ -45,10 +45,11 @@ Methodes de classe :
 import os
 import random
 from copy import deepcopy
-from Grille import Grille
-from Strategie import Strategie
-from Tools import afficher_couple_plateau, get_plateau_symbole, afficher_plateau
-from IA import IA
+
+from Scripts.Grille import Grille
+from Scripts.Strategie import Strategie
+from Scripts.Tools import afficher_couple_plateau, get_plateau_symbole, afficher_plateau
+from Scripts.IA import IA
 
 
 class BatailleNavale:

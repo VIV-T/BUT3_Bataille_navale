@@ -2,8 +2,9 @@ import unittest
 import pandas as pd
 
 from Scripts.Strategie import Strategie
-from Scripts.Navire import Navire, FactoryNavire
+from Scripts.Navire import FactoryNavire
 from Scripts.Grille import Grille
+from Scripts.Tools import get_plateau_symbole
 
 
 class TestStrategie(unittest.TestCase):
@@ -92,7 +93,10 @@ class TestStrategie(unittest.TestCase):
         self.strategie.set_grille()
         grille_test = Grille(10, 10)
         grille_test.create()
-        self.assertEqual(grille_test.get_plateau(), self.strategie.get_grille().get_plateau())
+        self.assertEqual(
+            get_plateau_symbole(grille_test.get_plateau()),
+            get_plateau_symbole(self.strategie.get_grille().get_plateau())
+        )
 
     ## Méthodes de classe.
     # placement_un_navire
@@ -122,7 +126,7 @@ class TestStrategie(unittest.TestCase):
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
-                         self.strategie.get_grille().get_plateau())
+                         get_plateau_symbole(self.strategie.get_grille().get_plateau()))
 
     def test_placement_un_navire_conflit_ligne(self):
         # Initialisation
@@ -152,7 +156,7 @@ class TestStrategie(unittest.TestCase):
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
-                         self.strategie.get_grille().get_plateau())
+                         get_plateau_symbole(self.strategie.get_grille().get_plateau()))
 
     def test_placement_un_navire_conflit_colonne(self):
         # Initialisation
@@ -182,7 +186,7 @@ class TestStrategie(unittest.TestCase):
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
-                         self.strategie.get_grille().get_plateau())
+                         get_plateau_symbole(self.strategie.get_grille().get_plateau()))
 
     # placement_navires
     def test_placement_navires_cas_nominal(self):
@@ -211,7 +215,7 @@ class TestStrategie(unittest.TestCase):
                           ['-', '-', '-', '-', '-', '-', '-', '-', 'P', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', 'P', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
-                         self.strategie.get_grille().get_plateau())
+                         get_plateau_symbole(self.strategie.get_grille().get_plateau()))
 
     def test_placement_navires_conflit_ligne(self):
         # Initialisation
@@ -240,7 +244,7 @@ class TestStrategie(unittest.TestCase):
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
-                         self.strategie.get_grille().get_plateau())
+                         get_plateau_symbole(self.strategie.get_grille().get_plateau()))
 
     def test_placement_navires_conflit_colonne(self):
         # Initialisation
@@ -269,7 +273,7 @@ class TestStrategie(unittest.TestCase):
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
-                         self.strategie.get_grille().get_plateau())
+                         get_plateau_symbole(self.strategie.get_grille().get_plateau()))
 
     # verifier_validite
     def test_verifier_validite_cas_nominal(self):

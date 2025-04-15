@@ -18,7 +18,7 @@ Méthodes de classe :
 
 import os
 
-from Grille import Grille
+from Scripts.Grille import Grille
 
 
 class ModeJeu():

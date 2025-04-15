@@ -19,11 +19,12 @@ Methodes de classe :
                     - inforamations de chacun des navires : passage par la methode de classe 'inputs_navire'.
 """
 
-from ModeJeu import ModeJeu, FactoryModeJeu
-from Grille import Grille
-from Navire import FactoryNavire
 import os
 import pandas as pd
+
+from Scripts.ModeJeu import ModeJeu, FactoryModeJeu
+from Scripts.Grille import Grille
+from Scripts.Navire import FactoryNavire
 
 
 class CreationModeJeu():

@@ -49,14 +49,14 @@ class TestBatailleNavale(TestCase):
         self.bataille_navale.tir(numJoueur=1, colonne=1, ligne=1)
         self.bataille_navale.tir(numJoueur=1, colonne=1, ligne=2)
 
-        self.assertTrue(self.bataille_navale.navire_coule(grille=self.bataille_navale.grille_def_j2, initiale='T'))
+        self.assertTrue(self.bataille_navale.navire_coule(plateau=self.bataille_navale.grille_def_j2, initiale='T'))
 
     def test_navire_coule_false(self):
         self.bataille_navale = BatailleNavale(navires=self.navires, test=True, pseudo_j1=self.pseudo_j1,
                                               pseudo_j2=self.pseudo_j2, instance_grille=self.grille,
                                               strategie_joueur1=self.strategie_j1, strategie_joueur2=self.strategie_j2)
 
-        self.assertFalse(self.bataille_navale.navire_coule(grille=self.bataille_navale.grille_def_j2, initiale='T'))
+        self.assertFalse(self.bataille_navale.navire_coule(plateau=self.bataille_navale.grille_def_j2, initiale='T'))
 
     # tous_les_navires_ont_coule
     def test_tous_les_navires_ont_coule_true(self):
@@ -81,14 +81,14 @@ class TestBatailleNavale(TestCase):
             for ligne in range(colonne, colonne + taille_nav):
                 self.bataille_navale.tir(1, ligne, colonne)
 
-        self.assertTrue(self.bataille_navale.tous_les_navires_ont_coule(grille=self.bataille_navale.grille_def_j2))
+        self.assertTrue(self.bataille_navale.tous_les_navires_ont_coule(plateau=self.bataille_navale.grille_def_j2))
 
     def test_tous_les_navires_ont_coule_false(self):
         self.bataille_navale = BatailleNavale(navires=self.navires, test=True, pseudo_j1=self.pseudo_j1,
                                               pseudo_j2=self.pseudo_j2, instance_grille=self.grille,
                                               strategie_joueur1=self.strategie_j1, strategie_joueur2=self.strategie_j2)
 
-        self.assertFalse(self.bataille_navale.tous_les_navires_ont_coule(grille=self.bataille_navale.grille_def_j1))
+        self.assertFalse(self.bataille_navale.tous_les_navires_ont_coule(plateau=self.bataille_navale.grille_def_j1))
 
     # tir
     def test_tir_touche(self):

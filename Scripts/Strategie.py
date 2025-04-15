@@ -34,11 +34,11 @@ Methodes de classes :
     - affichage_strategie : permet d'afficher la strategie en utlisant la fonction afficher_plateau() du module Tools.py
 """
 import pandas as pd
-
-from Grille import Grille
-from Navire import Navire
 from copy import deepcopy
-from Tools import afficher_plateau
+
+from Scripts.Grille import Grille
+from Scripts.Navire import Navire
+from Scripts.Tools import afficher_plateau
 
 class Strategie():
 

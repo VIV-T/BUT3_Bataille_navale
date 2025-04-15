@@ -5,7 +5,7 @@ from Scripts.IA import IA
 from Scripts.Navire import FactoryNavire
 from Scripts.Grille import Grille
 
-class TestTools(TestCase) :
+class TestIA(TestCase) :
     def setUp(self):
         # definir un plateau cible et une liste de navires
         cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
@@ -22,19 +22,19 @@ class TestTools(TestCase) :
         
         self.plateau_cible_adjacence = deepcopy(self.plateau_cible)
         self.plateau_cible_adjacence[1][1].set_statut("hit")
-        
+
+        self.IA_debutant = IA(level="debutant")
+        self.IA_intermediaire = IA(level="intermediaire")
+        self.IA_avance = IA(level="avance")
+        self.IA_test = IA(level="test")
+
         return super().setUp()
     
     def test_initialisation(self) :
-        self.IA_debutant = IA(level="debutant")
         self.assertEqual("debutant", self.IA_debutant.get_level())
-        self.IA_intermediaire = IA(level="intermediaire")
-        self.assertEqual("intermediaire", self.IA_debutant.get_level())
-        self.IA_avance = IA(level="avance")
-        self.assertEqual("avance", self.IA_debutant.get_level())
-
-        self.IA_test = IA(level="test")
-        self.assertEqual("test", self.IA_debutant.get_level())
+        self.assertEqual("intermediaire", self.IA_intermediaire.get_level())
+        self.assertEqual("avance", self.IA_avance.get_level())
+        self.assertEqual("test", self.IA_test.get_level())
 
 
     ### Liste cas testable

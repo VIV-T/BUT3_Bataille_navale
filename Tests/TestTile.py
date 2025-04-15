@@ -17,8 +17,3 @@ class TestTile(TestCase) :
 
         self.assertEqual("-", self.tile.get_symbole())
 
-
-if __name__=="__main__" :
-    test = TestTile()
-    test.test_set_navire()
-    test.test_set_symbole()

@@ -12,8 +12,9 @@ import random
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
-from Tools_IA import generer_configurations, genere_matrice_proba, get_coord_from_matrice_proba, trouver_coord_case_adjacente, check_nb_targeted_tile, cibler_coord_cross_random
-from Tools import afficher_plateau
+
+from Scripts.Tools_IA import generer_configurations, genere_matrice_proba, get_coord_from_matrice_proba, trouver_coord_case_adjacente, check_nb_targeted_tile, cibler_coord_cross_random
+from Scripts.Tools import afficher_plateau
 
 class IA():
     def get_level(self) :

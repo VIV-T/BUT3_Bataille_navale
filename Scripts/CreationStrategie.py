@@ -21,9 +21,10 @@ Méthode de classe :
                         => demande de toutes les informations nécessaires à l'utilisateur à l'aide d'inputs.
                         => pour chaque navire : appel de la methode 'input_donnees_placement_navire'
 '''
-from Grille import Grille
 import pandas as pd
-from Strategie import FactoryStrategie, Strategie
+
+from Scripts.Grille import Grille
+from Scripts.Strategie import FactoryStrategie, Strategie
 
 
 class CreationStrategie():

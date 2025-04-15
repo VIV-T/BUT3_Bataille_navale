@@ -3,6 +3,7 @@ from unittest import TestCase
 from Scripts.Navire import FactoryNavire
 from Scripts.CreationStrategie import CreationStrategie
 from Scripts.Grille import Grille
+from Scripts.Tools import get_plateau_symbole
 
 
 class TestCreationStrategie(TestCase):
@@ -32,7 +33,10 @@ class TestCreationStrategie(TestCase):
         taille_y = 10
         grille_test = Grille(taille_x, taille_y)
         grille_test.create()
-        self.assertEqual(grille_test.plateau, self.creation_strategie.get_grille().get_plateau())
+        self.assertEqual(
+            get_plateau_symbole(grille_test.plateau),
+            get_plateau_symbole(self.creation_strategie.get_grille().get_plateau())
+        )
         self.assertEqual(taille_x, self.creation_strategie.derniere_ligne_grille)
         self.assertEqual(taille_y, self.creation_strategie.derniere_colonne_grille)
 

@@ -83,7 +83,7 @@ def check_nb_targeted_tile(plateau_cible) :
 
 ### Toutes les configurations possibles
 
-from Tools import get_plateau_symbole, afficher_plateau
+from Scripts.Tools import get_plateau_symbole, afficher_plateau
 
 # Permet de vérifier pour chaque navire qu'il est possible de le placer de facon 'valide' dans le plateau_cible 
 def est_valide(plateau_cible, ligne, colonne, taille, horizontal):
@@ -282,9 +282,9 @@ def get_coord_from_matrice_proba(matrice_proba):
 
 
 ### Imports additionnels
-from Navire import FactoryNavire
-from Grille import Grille
-from Strategie import FactoryStrategie
+from Scripts.Navire import FactoryNavire
+from Scripts.Grille import Grille
+from Scripts.Strategie import FactoryStrategie
 
 import pandas as pd
 import matplotlib.pyplot as plt

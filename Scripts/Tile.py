@@ -8,7 +8,7 @@ Usage potentiellement utile pour toutes les question d'affichage.
 """
 
 # Imports
-from Navire import Navire
+from Scripts.Navire import Navire
 
 # Classe 
 class Tile() :

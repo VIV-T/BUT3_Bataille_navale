@@ -18,8 +18,8 @@ la methode self.reinit_plateau permet de réinitialiser  le plateau de jeu (matr
 Cette classe contient aussi deux méthodes d'affichage très utile notamment
 pour la classe BatailleNavale() et pour la classe ChoixStrategie().
 """
-from Tile import FactoryTile
-from Tools import get_plateau_symbole
+from Scripts.Tile import FactoryTile
+from Scripts.Tools import get_plateau_symbole
 
 class Grille():
     # Variables privées

@@ -51,13 +51,13 @@ Méthode de classe :
 import os
 import pandas as pd
 import re
-
 from unidecode import unidecode
-from Grille import Grille
-from Strategie import Strategie, FactoryStrategie
-from CreationStrategie import FactoryCreationStrategie
-from ModeJeu import ModeJeu
-from Tools import afficher_plateau
+
+from Scripts.Grille import Grille
+from Scripts.Strategie import Strategie, FactoryStrategie
+from Scripts.CreationStrategie import FactoryCreationStrategie
+from Scripts.ModeJeu import ModeJeu
+from Scripts.Tools import afficher_plateau
 
 class ChoixStrategie():
     # Getters

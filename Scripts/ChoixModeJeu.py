@@ -35,13 +35,13 @@ Methodes de classe :
 import pandas as pd
 import os
 import re
-
-from Grille import Grille
-from Navire import Navire, FactoryNavire
 from ast import literal_eval
-from CreationModeJeu import FactoryCreationModeJeu
-from ModeJeu import ModeJeu, FactoryModeJeu
-from Tools import afficher_plateau
+
+from Scripts.Grille import Grille
+from Scripts.Navire import FactoryNavire
+from Scripts.CreationModeJeu import FactoryCreationModeJeu
+from Scripts.ModeJeu import ModeJeu, FactoryModeJeu
+from Scripts.Tools import afficher_plateau
 
 
 class ChoixModeJeu():

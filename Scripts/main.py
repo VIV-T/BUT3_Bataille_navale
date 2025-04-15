@@ -10,16 +10,15 @@ Elle permet de regrouper les phases d'initialisation et de jeu :
 La fin de partie est gérée dans la classe BatailleNavale().
 '''
 import os
-
 import pandas as pd
 from unidecode import unidecode
 
-from ChoixStrategie import FactoryChoixStrategie
-from Strategie import FactoryStrategie
-from BatailleNavale import BatailleNavale
-from Grille import Grille
-from Navire import Navire
-from ChoixModeJeu import FactoryChoixModeJeu
+from Scripts.ChoixStrategie import FactoryChoixStrategie
+from Scripts.Strategie import FactoryStrategie
+from Scripts.BatailleNavale import BatailleNavale
+from Scripts.Grille import Grille
+from Scripts.Navire import Navire
+from Scripts.ChoixModeJeu import FactoryChoixModeJeu
 
 
 # Fonction d'input.
