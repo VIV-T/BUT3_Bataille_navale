@@ -1,7 +1,7 @@
 # Bataille Navale
  
 ## Présentation
-Ce projet s'inscrit dans un contexte universitaire (3ème année de BUT). Il s'agit de la continuité du code développé en deuxième année. L'idée ici fut de reprenre le code réalisé l'année précédente afin de l'améliorer et d'ajouter de nouvelles fonctionnalités.
+Ce projet s'inscrit dans un contexte universitaire (3ème année de BUT). Il s'agit de la continuité du code développé en deuxième année. L'idée ici fut de reprendre le code réalisé l'année précédente afin de l'améliorer et d'ajouter de nouvelles fonctionnalités. En dehors du contexte universitaire, j'ai continuer le projet pour l'améliorer et y ajouter de la complexité, en développant notamment divers niveau d'algorithme pour affronter le joueur.
 
 ## Arborescense
 Contrairement à précédemment, il y a ici une arborescence plus complexe.
