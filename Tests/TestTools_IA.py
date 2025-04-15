@@ -194,13 +194,129 @@ class TestTools_IA(TestCase) :
     # generer_configurations
     #       - tester plusieurs taille de plateaux
     #       - tester cas nominal sur plusieurs plateaux : vide et deja ciblé
+    def test_generer_configurations_Blitz_vide(self):
+        navires_blitz = {self.cuirasse, self.sous_marin, self.torpilleur}
 
-    
-    ## creation de la matrice de densite de proba 
-    # - analyse_config()
-    #       - tester cas nominal + cas vide ?
-    # - genere_matrice_proba()
-    #       - tester cas nominal + cas vide ?
-    # - get_coord_from_matrice_proba()
-    #       - tester cas nominal + cas vide ?
-    
+        grille_blitz = Grille(5,5)
+        grille_blitz.create()
+        plateau_vide_blitz = grille_blitz.get_plateau()
+
+        test_config = tools_ia.generer_configurations(plateau_cible=plateau_vide_blitz, navires=navires_blitz)
+
+        self.assertEqual(len(test_config), 9024)
+
+    def test_generer_configurations_Blitz_hits_fails(self):
+        navires_blitz = {self.cuirasse, self.sous_marin, self.torpilleur}
+
+        grille_blitz = Grille(5, 5)
+        grille_blitz.create()
+        plateau_vide_blitz = grille_blitz.get_plateau()
+
+        # Tirs artificiels
+        plateau_vide_blitz[0][0].set_statut("hit")
+        plateau_vide_blitz[4][4].set_statut("hit")
+        plateau_vide_blitz[4][0].set_statut("fail")
+        plateau_vide_blitz[3][1].set_statut("fail")
+        plateau_vide_blitz[0][4].set_statut("fail")
+
+        test_config = tools_ia.generer_configurations(plateau_cible=plateau_vide_blitz, navires=navires_blitz)
+        self.assertEqual(len(test_config), 340)
+
+
+    def set_plateau_Normal_test_config(self):
+        plateau = deepcopy(self.plateau_vide)
+        # Tirs artificiels
+        plateau[0][0].set_statut("cast", navire=self.torpilleur)
+        plateau[0][1].set_statut("cast", navire=self.torpilleur)
+        plateau[4][2].set_statut("hit", navire=self.sous_marin)
+        plateau[4][0].set_statut("fail")
+        plateau[3][1].set_statut("fail")
+        plateau[0][4].set_statut("fail")
+        plateau[9][9].set_statut("cast", navire=self.cuirasse)
+        plateau[8][9].set_statut("cast", navire=self.cuirasse)
+        plateau[7][9].set_statut("cast", navire=self.cuirasse)
+        plateau[6][9].set_statut("cast", navire=self.cuirasse)
+        plateau[0][9].set_statut("hit", navire=self.fregate)
+        plateau[1][9].set_statut("hit", navire=self.fregate)
+        plateau[8][3].set_statut("hit", navire=self.porte_avions)
+        plateau[8][6].set_statut("hit", navire=self.porte_avions)
+        plateau[0][7].set_statut("fail")
+        plateau[5][5].set_statut("fail")
+        plateau[6][6].set_statut("fail")
+        plateau[5][7].set_statut("fail")
+        plateau[4][6].set_statut("fail")
+        plateau[8][8].set_statut("fail")
+        plateau[6][8].set_statut("fail")
+        plateau[9][7].set_statut("fail")
+        plateau[7][7].set_statut("fail")
+        plateau[9][5].set_statut("fail")
+        plateau[2][2].set_statut("fail")
+        plateau[2][4].set_statut("fail")
+        plateau[2][6].set_statut("fail")
+        plateau[5][1].set_statut("fail")
+        plateau[6][4].set_statut("fail")
+        plateau[8][0].set_statut("fail")
+        plateau[5][3].set_statut("fail")
+        plateau[9][1].set_statut("fail")
+        plateau[8][2].set_statut("fail")
+        plateau[9][3].set_statut("fail")
+
+        return plateau
+
+
+    def test_generer_configurations_Normal_hits_fails(self):
+        plateau_normal = self.set_plateau_Normal_test_config()
+
+        test_config = tools_ia.generer_configurations(plateau_cible=plateau_normal, navires=self.navires)
+        self.assertEqual(len(test_config), 8)
+
+
+
+    # analyse_config
+    def test_analyse_config_cas_nominal(self):
+        plateau_normal = self.set_plateau_Normal_test_config()
+        configurations = tools_ia.generer_configurations(plateau_cible=plateau_normal, navires=self.navires)
+        test_config_analysed = tools_ia.analyse_config(configurations)
+        self.assertEqual(len(test_config_analysed), 8)
+
+
+    def test_analyse_config_cas_vide(self):
+        configurations = []
+        test_config_analyzed = tools_ia.analyse_config(configurations)
+        self.assertEqual(len(test_config_analyzed), 0)
+
+
+    # genere_matrice_proba
+    def test_genere_matrice_proba_cas_nominal(self):
+        plateau_normal = self.set_plateau_Normal_test_config()
+        configurations = tools_ia.generer_configurations(plateau_cible=plateau_normal, navires=self.navires)
+        test_matrice_proba = tools_ia.genere_matrice_proba(configurations)
+        self.assertEqual(test_matrice_proba,
+                         [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                          [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                          [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0],
+                          [0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                          [0.0, 0.25, 0.0, 0.5, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0],
+                          [0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                          [0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                          [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                          [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0],
+                          [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]])
+
+
+    def test_genere_matrice_proba_cas_vide(self):
+        configurations = []
+        try :
+            test_matrice_proba = tools_ia.genere_matrice_proba(configurations)
+        except ZeroDivisionError as err :
+            self.assertEqual(str(err), "division by zero")
+
+
+    # get_coord_from_matrice_proba
+    def test_get_coord_from_matrice_proba_cas_nominal(self):
+        plateau_normal = self.set_plateau_Normal_test_config()
+        configurations = tools_ia.generer_configurations(plateau_cible=plateau_normal, navires=self.navires)
+        test_matrice_proba = tools_ia.genere_matrice_proba(configurations)
+        ligne, colonne = tools_ia.get_coord_from_matrice_proba(test_matrice_proba)
+        self.assertEqual(8, ligne)
+        self.assertEqual(4, colonne)

@@ -139,7 +139,8 @@ def retirer_navire(grille, ligne, colonne, taille, horizontal):
 #   - Placement de tous les navires "vivants" => prise en compte des "hits" ("touchés") nécéssaires.
 #   - Prise en comptes des cases "touché" => s'assurer de la continuité entre les case navires et "touché" => si le nombre de tile occupée est la bonne, cela veut dire qu'un navire a été superposé à chaque "X" du plateau. 
 def configuration_valide(plateau_cible, navires, nb_hits):
-    # set de symbole : permet de compter les symbole dans le plateau 
+    ## 1er critere
+    # set de symbole : permet de compter les symbole dans le plateau
     symboles_navires = {navire.get_symbole() for navire in navires}
     # comptage du nombre de case devant être occupées
     critere_tiles_occupee = sum([navire.get_taille() for navire in navires])
@@ -158,6 +159,33 @@ def configuration_valide(plateau_cible, navires, nb_hits):
     # Si le 1er critère n'est pas respectés => return False
     if critere_tiles_occupee != nb_occuped_tiles : 
         return False
+
+    ## 2nd critere : une config avec un "X" seul n'est pas valide (depend de la longueur min d'un navire bien sur...)
+    for nb_ligne in range(len(plateau_cible)) :
+        for nb_colonne in range(len(plateau_cible[0])) :
+            # Si la case a été touchée : cibler les cases adjacentes.
+            if plateau_cible[nb_ligne][nb_colonne].get_statut() == "hit" :
+                compte_symbole_navires_adjacents = 0
+                liste_coord_adjacentes = [
+                    (nb_ligne-1, nb_colonne),
+                    (nb_ligne+1, nb_colonne),
+                    (nb_ligne, nb_colonne-1),
+                    (nb_ligne, nb_colonne+1)
+                ]
+                for couple_coord in liste_coord_adjacentes:
+                    try:
+                        # on ne veut pas de coordonnées negatives !!!
+                        if couple_coord[0] < 0 or couple_coord[1] < 0:
+                            raise ValueError
+
+                        symbole = plateau_cible[couple_coord[0]][couple_coord[1]].get_symbole()
+                        # On compte le nombre de case adjacente avec un symbole dessus
+                        if symbole in symboles_navires or symbole == "X" :
+                            compte_symbole_navires_adjacents += 1
+                    except :
+                        pass
+                if compte_symbole_navires_adjacents == 0 :
+                    return False
 
     return True
 
@@ -198,9 +226,10 @@ def generer_configurations(plateau_cible, navires : set):
     def generer(index):
         if index == len(navires):
             if configuration_valide(plateau_cible, navires, nb_hits):
-                afficher_plateau(plateau_cible)
-                print("")
-                print("")
+                #afficher_plateau(plateau_cible)
+                #print("")
+                #print("")
+
                 # conversion du plateau pour utiliser les symboles 
                 # -> plus simple dans le calcul de densité de probabilité
                 plateau_cible_symbole = get_plateau_symbole(plateau_cible)
