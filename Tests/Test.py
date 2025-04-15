@@ -10,9 +10,10 @@ from Tests.TestCreationModeJeu import TestCreationModeJeu
 from Tests.TestChoixStrategie import TestChoixStrategie
 from Tests.TestChoixModeJeu import TestChoixModeJeu
 from Tests.TestBatailleNavale import TestBatailleNavale
-
 from Tests.TestIA import TestIA
 from Tests.TestTools import TestTools
+
+# a faire
 from Tests.TestTools_IA import TestTools_IA
 
 
