@@ -1,6 +1,4 @@
 import random
-
-
 ########################################## IA intermediaire ##########################################
 def trouver_coordonnees_ciblees(plateau_cible) :
     liste_coord_ciblees = []
@@ -13,7 +11,6 @@ def trouver_coordonnees_ciblees(plateau_cible) :
     return liste_coord_ciblees
 
 def trouver_coord_case_adjacente(plateau_cible) :
-
     for nb_ligne in range(len(plateau_cible)) : 
         for nb_colonne in range(len(plateau_cible[0])) : 
             # Si la case a été touchée : cibler les cases adjacentes.
@@ -86,7 +83,7 @@ def check_nb_targeted_tile(plateau_cible) :
 from Scripts.Tools import get_plateau_symbole, afficher_plateau
 
 # Permet de vérifier pour chaque navire qu'il est possible de le placer de facon 'valide' dans le plateau_cible 
-def est_valide(plateau_cible, ligne, colonne, taille, horizontal):
+def placement_navire_valide(plateau_cible, ligne, colonne, taille, horizontal):
     if horizontal:
         # condition sur la taille du plateau et du navire
         if colonne + taille > len(plateau_cible[0]):
@@ -127,15 +124,15 @@ def placer_navire(plateau_cible, ligne, colonne, horizontal, navire):
 
 
 # On retire le navire du plateau_cible (pour une configuration)
-def retirer_navire(grille, row, col, taille, horizontal):
+def retirer_navire(grille, ligne, colonne, taille, horizontal):
     if horizontal:
         for i in range(taille):
-            if grille[row][col + i].get_statut() != 'hit' and grille[row][col + i].get_statut() != 'fail':
-                grille[row][col + i].set_navire(None)
+            if grille[ligne][colonne + i].get_statut() != 'hit' and grille[ligne][colonne + i].get_statut() != 'fail':
+                grille[ligne][colonne + i].set_navire(None)
     else:
         for i in range(taille):
-            if grille[row + i][col].get_statut() != 'hit' and grille[row + i][col].get_statut() != 'fail':
-                grille[row + i][col].set_navire(None)
+            if grille[ligne + i][colonne].get_statut() != 'hit' and grille[ligne + i][colonne].get_statut() != 'fail':
+                grille[ligne + i][colonne].set_navire(None)
 
 
 # Vérification que la configuration suit les critères de validités :
@@ -216,7 +213,7 @@ def generer_configurations(plateau_cible, navires : set):
         for ligne in range(len(plateau_cible)):
             for colonne in range(len(plateau_cible[0])):
                 for horizontal in [True, False]:
-                    if est_valide(plateau_cible, ligne, colonne, taille, horizontal):
+                    if placement_navire_valide(plateau_cible, ligne, colonne, taille, horizontal):
                         placer_navire(plateau_cible, ligne, colonne, horizontal, navire)
                         generer(index + 1)
                         retirer_navire(plateau_cible, ligne, colonne, taille, horizontal)
@@ -268,6 +265,7 @@ def genere_matrice_proba(all_config : list) :
 def get_coord_from_matrice_proba(matrice_proba):
     # Identifier le max dans la matrice de densité de proba
     maximum = max(max(ligne) for ligne in matrice_proba)
+    ligne, colonne = 0,0
 
     # Identification des index relatifs à la case ciblée
     for nb_ligne in range(len(matrice_proba)) :
@@ -278,77 +276,3 @@ def get_coord_from_matrice_proba(matrice_proba):
                 break
         
     return ligne, colonne
-
-
-
-### Imports additionnels
-from Scripts.Navire import FactoryNavire
-from Scripts.Grille import Grille
-from Scripts.Strategie import FactoryStrategie
-
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-
-if __name__=="__main__" :
-    ### SetUp
-    cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
-    fregate = FactoryNavire(nom="frégate", taille=3).get_navire()
-    sous_marin = FactoryNavire(nom="sous-marin", taille=3).get_navire()
-    torpilleur = FactoryNavire(nom="torpilleur", taille=2).get_navire()
-    porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
-
-    navires = {cuirasse, fregate, sous_marin, torpilleur, porte_avions}
-    navires_test = {cuirasse, sous_marin, torpilleur}
-
-    grille = Grille(10,10)
-    grille.create()
-
-    grille_test = Grille(5,5)
-    grille_test.create()
-
-    plateau_cible = grille_test.get_plateau()
-
-    plateau_cible[0][0].set_statut("hit")
-    plateau_cible[2][2].set_statut("fail")
-
-    #afficher_plateau(plateau=plateau_cible)
-    #print("")
-
-
-    """data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "cuirassé"],
-                                    "taille": [2, 3, 4], "coord_x": [1, 5, 3],
-                                    "coord_y": [1, 1, 5], "orientation": ["S", "E", "O"]}
-    
-    inputs_strategie = pd.DataFrame(data_inputs_strategie)
-    strategie_j2 = FactoryStrategie(inputs_strategie,
-                                 navires_test,
-                                 grille_test).get_strategie()
-    
-    plateau_strategie = strategie_j2.get_grille().get_plateau()
-    afficher_plateau(plateau_strategie)
-    print("")"""
-
-    res = trouver_coordonnees_ciblees(plateau_cible=plateau_cible)
-    print(res)
-
-"""    all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires_test)
-
-    nb_total_config = len(all_config)
-
-    print(f""
-          Le nombre total de configuration possible est : {nb_total_config}
-          "")
-
-
-    matrice_proba = genere_matrice_proba(all_config=all_config)
-
-    sns.heatmap(matrice_proba)
-
-    ligne, colonne = get_ligne_colonne_matrice_proba(matrice_proba=matrice_proba)
-
-    print(ligne, colonne)
-
-    
-    plt.show()"""
