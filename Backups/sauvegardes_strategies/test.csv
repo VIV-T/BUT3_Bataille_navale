@@ -1,0 +1,9 @@
+index_strategie,nom,taille,coord_x,coord_y,orientation
+1,frégate,3,1,1,E
+1,cuirassé,4,2,1,E
+1,torpilleur,3,3,1,E
+1,porte-avion,4,4,1,E
+2,frégate,3,3,2,E
+2,porte-avion,4,2,3,E
+2,torpilleur,3,5,7,N
+2,cuirassé,4,5,2,E

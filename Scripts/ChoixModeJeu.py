@@ -253,6 +253,12 @@ class ChoixModeJeu():
                                 self.get_mode_jeu().get_taille_grille()[1], liste_navires,
                                 self.get_mode_jeu().get_nb_navires()]
                     self.save.loc[len(self.save)] = new_data
+                    self.ecriture_sauvegarde()
+
+                    # creation d'un nouveau fichier de sauvegarde pour ce mode de jeu
+                    with open(self.backups_path+f"\\sauvegardes_strategies\\{self.get_mode_jeu().get_nom()}", "x") as new_file :
+                        # besoin de rien faire, on créé simplement le fichier
+                        pass
 
             # présentation du mode de jeu créé : lisibilité pour l'utilisateur
             os.system('cls')

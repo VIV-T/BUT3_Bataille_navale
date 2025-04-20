@@ -91,18 +91,24 @@ class ChoixStrategie():
 
     # Lecture du fichier et récupération des inputs_strategie enregistrées dans le référentiel.
     def lire_fichier_sauvegarde(self):
-        self.referentiel = pd.read_csv(f'{self.backups_path}\\sauvegardes_strategies.csv', encoding="UTF-8")
+        try :
+            self.referentiel = pd.read_csv(f'{self.backups_path}\\sauvegardes_strategies\\{self.mode_jeu.get_nom()}.csv', encoding="UTF-8")
+
+        # Si le fichier de sauvegarde est vide ou n'existe pas, le referentiel se doit d'ëtre vide.
+        except :
+            self.referentiel = pd.DataFrame({"index_strategie":[],"nom":[],"taille":[],"coord_x":[],"coord_y":[],"orientation":[]})
+
 
     # On écrit le fichier de sauvegarde à partir des données du référentiel.
     def ecrire_fichier_sauvegarde(self):
-        self.referentiel.to_csv(f'{self.backups_path}\\sauvegardes_strategies.csv', index=False, encoding="UTF-8")
+        self.referentiel.to_csv(f'{self.backups_path}\\sauvegardes_strategies\\{self.mode_jeu.get_nom()}.csv', index=False, encoding="UTF-8")
 
     # Méthode principale qui appelle toutes les autres en fonction des choix du joueur.
     def main(self):
 
         os.system('cls')
         print(f"C'est à {self.pseudo_joueur} de choisir sa stratégie de bataille.\n")
-        df_mode_jeu = self.referentiel[self.referentiel.mode_jeu == self.mode_jeu.get_nom()]
+        df_mode_jeu = self.referentiel
 
         if len(df_mode_jeu) > 0:
             choix_choisir_creer = f"{self.pseudo_joueur}, voulez-vous choisir une stratégie enregistrée ou en créer une nouvelle ?"
@@ -142,7 +148,7 @@ class ChoixStrategie():
                     index_strategie = 1
 
                 for line in new_inputs_strategie.values:
-                    new_data = [self.mode_jeu.get_nom(), index_strategie] + list(line)
+                    new_data = [index_strategie] + list(line)
                     self.referentiel.loc[len(self.referentiel.index)] = new_data
 
                 print("La stratégie a bien été enregistrée.")
@@ -169,7 +175,8 @@ class ChoixStrategie():
                 print('Voici la liste des stratégies enregistrée :')
 
                 # correspondance avec le mode de jeu
-                df_strategie_to_choose = self.referentiel[self.referentiel.mode_jeu == self.mode_jeu.get_nom()]
+                #df_strategie_to_choose = self.referentiel[self.referentiel.mode_jeu == self.mode_jeu.get_nom()]
+                df_strategie_to_choose = self.referentiel
                 # extraction de l'ensemble des index_strategie correspondant au premier critère de filtrage (mode_jeu)
                 liste_index_strategie = set(df_strategie_to_choose.index_strategie)
                 # Boucle pour l'affichage

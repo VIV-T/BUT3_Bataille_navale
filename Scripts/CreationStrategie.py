@@ -99,7 +99,9 @@ class CreationStrategie():
                 print('Vous devez re-saisir les caractéristiques du dernier navire.')
                 print(
                     "L'orientation choisie peut être mauvaise, il est aussi possible que votre choix de placement soit incorrect (chevauchement de 2 navires)\n")
-                self.inputs_strategie[f'{navire}'] = self.input_donnees_placement_navire(navire)
+                # suppression de la ligne avec les données érronées
+                self.inputs_strategie = self.inputs_strategie[self.inputs_strategie["nom"]!=navire.get_nom()]
+                self.inputs_strategie.loc[len(self.inputs_strategie.index)] = self.input_donnees_placement_navire(navire)
                 # initialisation de l'instance de la classe Strategie
                 self.instance_strategie = FactoryStrategie(self.inputs_strategie, self.navires,
                                                            grille=self.get_grille(), complete=False).strategie

@@ -18,6 +18,7 @@ from Scripts.Strategie import FactoryStrategie
 from Scripts.BatailleNavale import BatailleNavale
 from Scripts.Grille import Grille
 from Scripts.Navire import Navire
+from Scripts.ModeJeu import ModeJeu
 from Scripts.ChoixModeJeu import FactoryChoixModeJeu
 
 
@@ -27,7 +28,7 @@ from Scripts.ChoixModeJeu import FactoryChoixModeJeu
 # Appel de la classe ChoisirStrategie() pour le joueur concerné.
 # La fonction renvoie une liste qui contient le nom du joueur saisi
 # et sa strategie sous la forme d'une instance de la classe Strategie.
-def choix_nom_et_strategie_joueur(numero_joueur, navires : Navire, grille : Grille, mode_jeu : str):
+def choix_nom_et_strategie_joueur(numero_joueur, navires : Navire, grille : Grille, mode_jeu : ModeJeu):
     # initialisation de variables locales
     pseudo_joueur = ''
     # Le booléen choix_valide_joueur permet de gérer les cas d'erreur sur les inputs et d'y répondre de manière efficace :
