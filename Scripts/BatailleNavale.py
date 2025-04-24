@@ -235,8 +235,8 @@ class BatailleNavale:
             ligne, colonne = self.IA.play_IA(self.grille_att_j2, navires=self.navires)
 
             resultat = self.tir(2, ligne, colonne)
-            print(resultat)
-            print(ligne, colonne)
+            print(f"Vous avez été ciblé en : {ligne}, {colonne}")
+            print(f"Résultat : {resultat}")
             afficher_plateau(self.grille_def_j1)
             input("Tapez 'entrer' pour continuer")
 

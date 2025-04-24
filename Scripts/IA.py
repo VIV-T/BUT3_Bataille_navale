@@ -78,18 +78,20 @@ class IA():
 
 
 
-        if nb_targeted_tile > 30 : 
+        if nb_targeted_tile > 30 or len(plateau_cible)<=5 : 
             all_config = generer_configurations(plateau_cible=plateau_cible, navires=navires)
 
             matrice_proba = genere_matrice_proba(all_config=all_config)
 
             # enregistrement de la matrice de densité
-            sns.heatmap(matrice_proba)
-            try : 
-                os.remove('proba_densite.png')
-            except :
-                pass
-            plt.savefig('proba_densite.png')
+            sns.heatmap(matrice_proba, annot=True)
+
+            # comptage du nombre fichiers dans le dossier
+            PATH_PROBA="proba"
+            for path, dirs, files in os.walk(PATH_PROBA):
+                nb_files = (len(files))
+
+            plt.savefig(f'proba\\proba_densite_{nb_files+1}.png')
             plt.close()
             
 

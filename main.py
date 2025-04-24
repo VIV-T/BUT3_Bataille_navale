@@ -170,4 +170,12 @@ if __name__ == "__main__":
                                  navires,
                                  grille).get_strategie()
 
+    # Suppression des matrices de densité de proba enregistrés
+    PATH_PROBA="proba"
+    for filename in os.listdir(PATH_PROBA) :
+        os.remove(PATH_PROBA + "/" + filename)
+
+
+
+    # Lancement de la partie
     BatailleNavale(navires, strategie_j1, strategie_j2, grille,nom_j1, nom_j2, level_IA=choix_level)
